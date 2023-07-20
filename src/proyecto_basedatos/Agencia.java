@@ -11,22 +11,23 @@ package proyecto_basedatos;
  */
 public class Agencia {
     
-    private String codigo_agencia,nombre_agencia;
+    private String id_agencia,nombre_agencia,ubicacion;
 
     public Agencia() {
     }
 
-    public Agencia(String codigo_agencia, String nombre_agencia) {
-        this.codigo_agencia = codigo_agencia;
+    public Agencia(String id_agencia, String nombre_agencia, String ubicacion) {
+        this.id_agencia = id_agencia;
         this.nombre_agencia = nombre_agencia;
+        this.ubicacion = ubicacion;
     }
 
-    public String getCodigo_agencia() {
-        return codigo_agencia;
+    public String getId_agencia() {
+        return id_agencia;
     }
 
-    public void setCodigo_agencia(String codigo_agencia) {
-        this.codigo_agencia = codigo_agencia;
+    public void setId_agencia(String id_agencia) {
+        this.id_agencia = id_agencia;
     }
 
     public String getNombre_agencia() {
@@ -37,11 +38,20 @@ public class Agencia {
         this.nombre_agencia = nombre_agencia;
     }
 
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
     @Override
     public String toString() {
-        return "Agencia{" + "codigo_agencia=" + codigo_agencia + ", nombre_agencia=" + nombre_agencia + '}';
+        return "Agencia{" + "id_agencia=" + id_agencia + ", nombre_agencia=" + nombre_agencia + ", ubicacion=" + ubicacion + '}';
     }
-    
+
+   
     
     
     

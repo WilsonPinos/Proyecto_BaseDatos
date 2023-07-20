@@ -11,15 +11,14 @@ package proyecto_basedatos;
  */
 public class Ruta {
     
-    private String codigo_ruta,destino,origen;
+    private String codigo_ruta,origen;
     private double distancia;
 
     public Ruta() {
     }
 
-    public Ruta(String codigo_ruta, String destino, String origen, double distancia) {
+    public Ruta(String codigo_ruta, String origen, double distancia) {
         this.codigo_ruta = codigo_ruta;
-        this.destino = destino;
         this.origen = origen;
         this.distancia = distancia;
     }
@@ -30,14 +29,6 @@ public class Ruta {
 
     public void setCodigo_ruta(String codigo_ruta) {
         this.codigo_ruta = codigo_ruta;
-    }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
     }
 
     public String getOrigen() {
@@ -58,8 +49,10 @@ public class Ruta {
 
     @Override
     public String toString() {
-        return "Ruta{" + "codigo_ruta=" + codigo_ruta + ", destino=" + destino + ", origen=" + origen + ", distancia=" + distancia + '}';
+        return "Ruta{" + "codigo_ruta=" + codigo_ruta + ", origen=" + origen + ", distancia=" + distancia + '}';
     }
+
+ 
     
     
     
