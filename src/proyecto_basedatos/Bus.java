@@ -12,17 +12,16 @@ package proyecto_basedatos;
 public class Bus {
     
     private int num_bus,cantidad_pas;
-    private String matricula,color_bus,nombre_agencia;
+    private String matricula,color_bus;
 
     public Bus() {
     }
 
-    public Bus(int num_bus, int cantidad_pas, String matricula, String color_bus, String nombre_agencia) {
+    public Bus(int num_bus, int cantidad_pas, String matricula, String color_bus) {
         this.num_bus = num_bus;
         this.cantidad_pas = cantidad_pas;
         this.matricula = matricula;
         this.color_bus = color_bus;
-        this.nombre_agencia = nombre_agencia;
     }
 
     public int getNum_bus() {
@@ -57,19 +56,10 @@ public class Bus {
         this.color_bus = color_bus;
     }
 
-    public String getNombre_agencia() {
-        return nombre_agencia;
-    }
-
-    public void setNombre_agencia(String nombre_agencia) {
-        this.nombre_agencia = nombre_agencia;
-    }
-
     @Override
     public String toString() {
-        return "Bus{" + "num_bus=" + num_bus + ", cantidad_pas=" + cantidad_pas + ", matricula=" + matricula + ", color_bus=" + color_bus + ", nombre_agencia=" + nombre_agencia + '}';
+        return "Bus{" + "num_bus=" + num_bus + ", cantidad_pas=" + cantidad_pas + ", matricula=" + matricula + ", color_bus=" + color_bus + '}';
     }
 
-   
     
 }
