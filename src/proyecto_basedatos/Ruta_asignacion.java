@@ -5,23 +5,26 @@
  */
 package proyecto_basedatos;
 
+import java.util.Date;
+
 /**
  *
  * @author mauri
  */
 public class Ruta_asignacion {
     
-    private String id_asignacion,matricula_bus,codigo_ruta,tramo,descripcion;
+    private String id_asignacion,matricula_bus,codigo_ruta,descripcion;
+    private Date hora_asignacion;
 
     public Ruta_asignacion() {
     }
 
-    public Ruta_asignacion(String id_asignacion, String matricula_bus, String codigo_ruta, String tramo, String descripcion) {
+    public Ruta_asignacion(String id_asignacion, String matricula_bus, String codigo_ruta, String descripcion, Date hora_asignacion) {
         this.id_asignacion = id_asignacion;
         this.matricula_bus = matricula_bus;
         this.codigo_ruta = codigo_ruta;
-        this.tramo = tramo;
         this.descripcion = descripcion;
+        this.hora_asignacion = hora_asignacion;
     }
 
     public String getId_asignacion() {
@@ -48,14 +51,6 @@ public class Ruta_asignacion {
         this.codigo_ruta = codigo_ruta;
     }
 
-    public String getTramo() {
-        return tramo;
-    }
-
-    public void setTramo(String tramo) {
-        this.tramo = tramo;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -64,12 +59,19 @@ public class Ruta_asignacion {
         this.descripcion = descripcion;
     }
 
+    public Date getHora_asignacion() {
+        return hora_asignacion;
+    }
+
+    public void setHora_asignacion(Date hora_asignacion) {
+        this.hora_asignacion = hora_asignacion;
+    }
+
     @Override
     public String toString() {
-        return "Ruta_asignacion{" + "id_asignacion=" + id_asignacion + ", matricula_bus=" + matricula_bus + ", codigo_ruta=" + codigo_ruta + ", tramo=" + tramo + ", descripcion=" + descripcion + '}';
+        return "Ruta_asignacion{" + "id_asignacion=" + id_asignacion + ", matricula_bus=" + matricula_bus + ", codigo_ruta=" + codigo_ruta + ", descripcion=" + descripcion + ", hora_asignacion=" + hora_asignacion + '}';
     }
-    
-    
+
     
     
     

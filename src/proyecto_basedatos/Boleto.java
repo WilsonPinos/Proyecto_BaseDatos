@@ -11,9 +11,10 @@ package proyecto_basedatos;
  */
 public class Boleto {
     
+    private String id_boleto,matricula_bus,id_cajero,id_destino;
     private double precio;
     private int num_asiento;
-    private String id_boleto,matricula_bus,id_cajero,id_destino;
+    
 
     public Boleto() {
     }

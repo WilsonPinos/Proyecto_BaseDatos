@@ -12,9 +12,14 @@ package proyecto_basedatos;
 public class Destino {
     
     private String id_destino,descripcion,nombre_destino;
-    private double duracion_viaje;
 
     public Destino() {
+    }
+
+    public Destino(String id_destino, String descripcion, String nombre_destino) {
+        this.id_destino = id_destino;
+        this.descripcion = descripcion;
+        this.nombre_destino = nombre_destino;
     }
 
     public String getId_destino() {
@@ -41,20 +46,9 @@ public class Destino {
         this.nombre_destino = nombre_destino;
     }
 
-    public double getDuracion_viaje() {
-        return duracion_viaje;
-    }
-
-    public void setDuracion_viaje(double duracion_viaje) {
-        this.duracion_viaje = duracion_viaje;
-    }
-
     @Override
     public String toString() {
-        return "Destino{" + "id_destino=" + id_destino + ", descripcion=" + descripcion + ", nombre_destino=" + nombre_destino + ", duracion_viaje=" + duracion_viaje + '}';
+        return "Destino{" + "id_destino=" + id_destino + ", descripcion=" + descripcion + ", nombre_destino=" + nombre_destino + '}';
     }
-    
-    
-    
-    
+
 }

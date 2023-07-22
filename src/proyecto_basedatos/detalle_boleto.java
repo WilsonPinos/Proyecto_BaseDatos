@@ -14,17 +14,17 @@ import java.util.Date;
 public class detalle_boleto {
     
      private String id_cliente,id_boleto,id_detalle;
-     private Date compra;
+     private Date fec_compra;
      private int cantidad;
 
     public detalle_boleto() {
     }
 
-    public detalle_boleto(String id_cliente, String id_boleto, String id_detalle, Date compra, int cantidad) {
+    public detalle_boleto(String id_cliente, String id_boleto, String id_detalle, Date fec_compra, int cantidad) {
         this.id_cliente = id_cliente;
         this.id_boleto = id_boleto;
         this.id_detalle = id_detalle;
-        this.compra = compra;
+        this.fec_compra = fec_compra;
         this.cantidad = cantidad;
     }
 
@@ -52,12 +52,12 @@ public class detalle_boleto {
         this.id_detalle = id_detalle;
     }
 
-    public Date getCompra() {
-        return compra;
+    public Date getFec_compra() {
+        return fec_compra;
     }
 
-    public void setCompra(Date compra) {
-        this.compra = compra;
+    public void setFec_compra(Date fec_compra) {
+        this.fec_compra = fec_compra;
     }
 
     public int getCantidad() {
@@ -70,10 +70,8 @@ public class detalle_boleto {
 
     @Override
     public String toString() {
-        return "detalle_boleto{" + "id_cliente=" + id_cliente + ", id_boleto=" + id_boleto + ", id_detalle=" + id_detalle + ", compra=" + compra + ", cantidad=" + cantidad + '}';
+        return "detalle_boleto{" + "id_cliente=" + id_cliente + ", id_boleto=" + id_boleto + ", id_detalle=" + id_detalle + ", fec_compra=" + fec_compra + ", cantidad=" + cantidad + '}';
     }
-     
-     
-     
+
     
 }
