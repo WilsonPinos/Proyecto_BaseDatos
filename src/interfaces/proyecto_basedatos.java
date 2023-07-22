@@ -96,6 +96,11 @@ public class proyecto_basedatos extends javax.swing.JFrame {
                 btnIngresoMouseEntered(evt);
             }
         });
+        btnIngreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -215,6 +220,10 @@ public class proyecto_basedatos extends javax.swing.JFrame {
     private void pUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pUsuarioKeyTyped
 
     }//GEN-LAST:event_pUsuarioKeyTyped
+
+    private void btnIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIngresoActionPerformed
 
     /**
      * @param args the command line arguments
