@@ -32,7 +32,7 @@ public class Modificar_ruta extends javax.swing.JFrame {
         lblcodigo = new javax.swing.JLabel();
         lblorigen = new javax.swing.JLabel();
         txtcodigo = new javax.swing.JTextField();
-        btnsalir = new javax.swing.JButton();
+        btnregresar = new javax.swing.JButton();
         btnguardar = new javax.swing.JButton();
         txtorigen = new javax.swing.JTextField();
         lbldistancia = new javax.swing.JLabel();
@@ -49,7 +49,7 @@ public class Modificar_ruta extends javax.swing.JFrame {
 
         lblorigen.setText("Origen:");
 
-        btnsalir.setText("SALIR");
+        btnregresar.setText("REGRESAR");
 
         btnguardar.setText("GUARDAR");
 
@@ -83,7 +83,7 @@ public class Modificar_ruta extends javax.swing.JFrame {
                             .addComponent(txtorigen, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(150, 150, 150)
-                        .addComponent(btnsalir)
+                        .addComponent(btnregresar)
                         .addGap(43, 43, 43)
                         .addComponent(btnguardar)))
                 .addGap(174, 174, 174))
@@ -118,7 +118,7 @@ public class Modificar_ruta extends javax.swing.JFrame {
                         .addComponent(lbldistancia)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnsalir)
+                    .addComponent(btnregresar)
                     .addComponent(btnguardar))
                 .addGap(72, 72, 72))
         );
@@ -177,7 +177,7 @@ public class Modificar_ruta extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnguardar;
-    private javax.swing.JButton btnsalir;
+    private javax.swing.JButton btnregresar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblcodigo;
     private javax.swing.JLabel lbldistancia;

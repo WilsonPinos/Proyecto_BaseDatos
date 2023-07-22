@@ -39,87 +39,112 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="lbltitulo" alignment="0" max="32767" attributes="0"/>
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblfechafin" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblfechaobtencion" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblruta" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblagencia" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblcapacidad" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblcolor" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblnumerobus" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblmatricula" alignment="1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtmatricula" alignment="0" max="32767" attributes="0"/>
-                      <Component id="dcfechafin" alignment="0" pref="136" max="32767" attributes="0"/>
-                      <Component id="jTextField1" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jTextField2" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jTextField3" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jTextField4" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jTextField5" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jTextField6" alignment="0" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="197" max="32767" attributes="0"/>
-              </Group>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btnsalir" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="194" max="32767" attributes="0"/>
+                  <Component id="btnregresar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                   <Component id="btnguardar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="lblturno" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblfechacontratacion" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblnivelestudio" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblfechanacimiento" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbledad" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblcelular" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblcorreo" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblapellido" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblnombre" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblcedula" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblidcajero" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="txtidcajero" alignment="0" max="32767" attributes="0"/>
+                      <Component id="dcfechafin" alignment="0" pref="136" max="32767" attributes="0"/>
+                      <Component id="txtcedula" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtnombre" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtapellido" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtcorreo" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtcelular" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtedad" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtnivelestudio" max="32767" attributes="0"/>
+                      <Component id="dcfechacontratacion" max="32767" attributes="0"/>
+                      <Component id="cbturno" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="lbltitulo" min="-2" pref="32" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblmatricula" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtmatricula" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="lbltitulo" min="-2" pref="32" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblidcajero" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtidcajero" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblcedula" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtcedula" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblnombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtnombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblapellido" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtapellido" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblcorreo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtcorreo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblcelular" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtcelular" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lbledad" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtedad" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblfechanacimiento" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="dcfechafin" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblnivelestudio" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtnivelestudio" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="lblfechacontratacion" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="dcfechacontratacion" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblnumerobus" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblturno" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbturno" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace pref="41" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblcolor" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblcapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblagencia" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblruta" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblfechaobtencion" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblfechafin" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="dcfechafin" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="29" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnsalir" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnregresar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnguardar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
@@ -137,53 +162,53 @@
             <Property name="text" type="java.lang.String" value="MODIFICAR CAJERO"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblmatricula">
+        <Component class="javax.swing.JLabel" name="lblidcajero">
           <Properties>
             <Property name="text" type="java.lang.String" value="Id_cajero"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblnumerobus">
+        <Component class="javax.swing.JLabel" name="lblcedula">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cedula:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblcolor">
+        <Component class="javax.swing.JLabel" name="lblnombre">
           <Properties>
             <Property name="text" type="java.lang.String" value="Nombre:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblcapacidad">
+        <Component class="javax.swing.JLabel" name="lblapellido">
           <Properties>
             <Property name="text" type="java.lang.String" value="Apellido:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblagencia">
+        <Component class="javax.swing.JLabel" name="lblcorreo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Correo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblruta">
+        <Component class="javax.swing.JLabel" name="lblcelular">
           <Properties>
             <Property name="text" type="java.lang.String" value="Celular:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblfechaobtencion">
+        <Component class="javax.swing.JLabel" name="lbledad">
           <Properties>
             <Property name="text" type="java.lang.String" value="Edad:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblfechafin">
+        <Component class="javax.swing.JLabel" name="lblfechanacimiento">
           <Properties>
             <Property name="text" type="java.lang.String" value="Fecha de nacimiento:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtmatricula">
+        <Component class="javax.swing.JTextField" name="txtidcajero">
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dcfechafin">
         </Component>
-        <Component class="javax.swing.JButton" name="btnsalir">
+        <Component class="javax.swing.JButton" name="btnregresar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="SALIR"/>
+            <Property name="text" type="java.lang.String" value="REGRESAR"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnguardar">
@@ -191,17 +216,50 @@
             <Property name="text" type="java.lang.String" value="GUARDAR"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="txtcedula">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="txtnombre">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
+        <Component class="javax.swing.JTextField" name="txtapellido">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField4">
+        <Component class="javax.swing.JTextField" name="txtcorreo">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField5">
+        <Component class="javax.swing.JTextField" name="txtcelular">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField6">
+        <Component class="javax.swing.JTextField" name="txtedad">
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblnivelestudio">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Nivel de estudio:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblfechacontratacion">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Fecha de contratacion:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblturno">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Turno:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtnivelestudio">
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="dcfechacontratacion">
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cbturno">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="3">
+                <StringItem index="0" value="Ma&#xf1;ana"/>
+                <StringItem index="1" value="Tarde"/>
+                <StringItem index="2" value="Noche."/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

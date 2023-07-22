@@ -13,15 +13,15 @@ import java.util.Date;
  */
 public class Cajero {
     
-    private String Id_cajero,Cedula,nombre,apellido,correo,celular,nivel_estudio;
+    private String Id_cajero,Cedula,nombre,apellido,correo,celular,nivel_estudio,turno;
     private int edad;
-    private Date nacimiento;
+    private Date nacimiento,fec_contratacion;
 
     public Cajero() {
        
     }
 
-    public Cajero(String Id_cajero, String Cedula, String nombre, String apellido, String correo, String celular, String nivel_estudio, int edad, Date nacimiento) {
+    public Cajero(String Id_cajero, String Cedula, String nombre, String apellido, String correo, String celular, String nivel_estudio, String turno, int edad, Date nacimiento, Date fec_contratacion) {
         this.Id_cajero = Id_cajero;
         this.Cedula = Cedula;
         this.nombre = nombre;
@@ -29,8 +29,10 @@ public class Cajero {
         this.correo = correo;
         this.celular = celular;
         this.nivel_estudio = nivel_estudio;
+        this.turno = turno;
         this.edad = edad;
         this.nacimiento = nacimiento;
+        this.fec_contratacion = fec_contratacion;
     }
 
     public String getId_cajero() {
@@ -89,6 +91,14 @@ public class Cajero {
         this.nivel_estudio = nivel_estudio;
     }
 
+    public String getTurno() {
+        return turno;
+    }
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
+
     public int getEdad() {
         return edad;
     }
@@ -105,16 +115,18 @@ public class Cajero {
         this.nacimiento = nacimiento;
     }
 
-    @Override
-    public String toString() {
-        return "Cajero{" + "Id_cajero=" + Id_cajero + ", Cedula=" + Cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", correo=" + correo + ", celular=" + celular + ", nivel_estudio=" + nivel_estudio + ", edad=" + edad + ", nacimiento=" + nacimiento + '}';
+    public Date getFec_contratacion() {
+        return fec_contratacion;
     }
 
-   
-    
-    
-    
-    
-    
+    public void setFec_contratacion(Date fec_contratacion) {
+        this.fec_contratacion = fec_contratacion;
+    }
+
+    @Override
+    public String toString() {
+        return "Cajero{" + "Id_cajero=" + Id_cajero + ", Cedula=" + Cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", correo=" + correo + ", celular=" + celular + ", nivel_estudio=" + nivel_estudio + ", turno=" + turno + ", edad=" + edad + ", nacimiento=" + nacimiento + ", fec_contratacion=" + fec_contratacion + '}';
+    }
+
     
 }

@@ -42,33 +42,20 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
-                          <Component id="btnsalir" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                          <Component id="btnguardar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                          <Component id="btnbuscar" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="lblnivelestudio" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblfechanacimiento" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lbledad" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblcelular" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblcorreo" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblapellido" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblnombre" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblcedula" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblidcajero" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="lblfechacontratacion" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblturno" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblfechanac" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbledad" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblcelular" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblcorreo" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblapellido" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblnombre" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblcedula" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblidcliente" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtmatricula" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtidcliente" alignment="0" max="32767" attributes="0"/>
                               <Component id="dcfechafin" alignment="0" pref="136" max="32767" attributes="0"/>
                               <Component id="txtcedula" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtnombre" alignment="0" max="32767" attributes="0"/>
@@ -76,10 +63,15 @@
                               <Component id="txtcorreo" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtcelular" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtedad" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtnivelestudio" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jDateChooser1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="cbturno" alignment="0" max="32767" attributes="0"/>
                           </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
+                          <Component id="btnsalir" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnguardar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                          <Component id="btnbuscar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="155" max="32767" attributes="0"/>
@@ -92,8 +84,8 @@
                   <Component id="lbltitulo" min="-2" pref="32" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblidcajero" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtmatricula" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblidcliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtidcliente" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -127,25 +119,10 @@
                   </Group>
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblfechanacimiento" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblfechanac" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="dcfechafin" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblnivelestudio" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtnivelestudio" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="lblfechacontratacion" min="-2" max="-2" attributes="0"/>
-                      <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblturno" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cbturno" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="30" max="32767" attributes="0"/>
+                  <EmptySpace pref="35" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnsalir" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnguardar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -163,12 +140,12 @@
               <Font name="Tahoma" size="24" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="INGRESO DE CAJERO"/>
+            <Property name="text" type="java.lang.String" value="INGRESO DE CLIENTE"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblidcajero">
+        <Component class="javax.swing.JLabel" name="lblidcliente">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Id_cajero"/>
+            <Property name="text" type="java.lang.String" value="Id:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblcedula">
@@ -201,12 +178,12 @@
             <Property name="text" type="java.lang.String" value="Edad:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblfechanacimiento">
+        <Component class="javax.swing.JLabel" name="lblfechanac">
           <Properties>
             <Property name="text" type="java.lang.String" value="Fecha de nacimiento:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtmatricula">
+        <Component class="javax.swing.JTextField" name="txtidcliente">
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dcfechafin">
         </Component>
@@ -236,40 +213,6 @@
         <Component class="javax.swing.JTextField" name="txtcelular">
         </Component>
         <Component class="javax.swing.JTextField" name="txtedad">
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblnivelestudio">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Nivel de estudio:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtnivelestudio">
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblfechacontratacion">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha de contratacion:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblturno">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Turno:"/>
-          </Properties>
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
-        </Component>
-        <Component class="javax.swing.JComboBox" name="cbturno">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value=""/>
-                <StringItem index="1" value="Ma&#xf1;ana"/>
-                <StringItem index="2" value="Tarde"/>
-                <StringItem index="3" value="Noche."/>
-              </StringArray>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
