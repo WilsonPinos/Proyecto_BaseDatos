@@ -5,6 +5,12 @@
  */
 package interfaces;
 
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import proyecto_basedatos.Cajero;
+
 /**
  *
  * @author Wilson Pinos
@@ -16,6 +22,41 @@ public class Modificar_cajero extends javax.swing.JFrame {
      */
     public Modificar_cajero() {
         initComponents();
+    }
+    public void recibirCodigo(String id, String Cedula, String nombre, String apellido, String correo, String celular, String nivel_estudio, String turno, int edad, Date fecha_nac, Date fec_contrat) {
+        txtidcajero.setText(id);
+        txtidcajero.setEnabled(false);
+        txtcedula.setText(Cedula);
+        txtnombre.setText(nombre);
+        txtapellido.setText(apellido);
+        txtcorreo.setText(correo);
+        txtcelular.setText(celular);
+        txtnivelestudio.setText(nivel_estudio);
+        cbturno.setSelectedItem(turno);
+        String auxedad = String.valueOf(edad);
+        txtedad.setText(auxedad);
+        dcfechanacimiento.setDate(fecha_nac);
+        dcfechacontratacion.setDate(fec_contrat);
+    }
+    public void ModificarCajero(ObjectContainer base) {
+        Cajero Bcajero = new Cajero(txtidcajero.getText(), txtcedula.getText(), null, null, null, null, null, null, 0, null, null);
+        ObjectSet resultado = base.get(Bcajero);
+        
+        Cajero Mcajero = (Cajero) resultado.next();
+        Mcajero.setNombre(txtnombre.getText());
+        Mcajero.setApellido(txtapellido.getText());
+        Mcajero.setCorreo(txtcorreo.getText());
+        Mcajero.setCelular(txtcelular.getText());
+        Mcajero.setNivel_estudio(txtnivelestudio.getText());
+        Mcajero.setTurno(cbturno.getSelectedItem().toString());
+        String auxedad = txtedad.getText();
+        int edad = Integer.valueOf(auxedad);
+        Mcajero.setEdad(edad);
+        Mcajero.setNacimiento(dcfechanacimiento.getDate());
+        Mcajero.setFec_contratacion(dcfechacontratacion.getDate());
+        base.set(Mcajero);
+        
+        JOptionPane.showMessageDialog(this, "Modificacion exitosa");
     }
 
     /**
@@ -38,7 +79,7 @@ public class Modificar_cajero extends javax.swing.JFrame {
         lbledad = new javax.swing.JLabel();
         lblfechanacimiento = new javax.swing.JLabel();
         txtidcajero = new javax.swing.JTextField();
-        dcfechafin = new com.toedter.calendar.JDateChooser();
+        dcfechanacimiento = new com.toedter.calendar.JDateChooser();
         btnregresar = new javax.swing.JButton();
         btnguardar = new javax.swing.JButton();
         txtcedula = new javax.swing.JTextField();
@@ -86,7 +127,7 @@ public class Modificar_cajero extends javax.swing.JFrame {
 
         lblturno.setText("Turno:");
 
-        cbturno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mañana", "Tarde", "Noche." }));
+        cbturno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Mañana", "Tarde", "Noche" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,7 +158,7 @@ public class Modificar_cajero extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtidcajero)
-                    .addComponent(dcfechafin, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                    .addComponent(dcfechanacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                     .addComponent(txtcedula)
                     .addComponent(txtnombre)
                     .addComponent(txtapellido)
@@ -166,7 +207,7 @@ public class Modificar_cajero extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblfechanacimiento)
-                            .addComponent(dcfechafin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dcfechanacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblnivelestudio)
@@ -242,7 +283,7 @@ public class Modificar_cajero extends javax.swing.JFrame {
     private javax.swing.JButton btnregresar;
     private javax.swing.JComboBox<String> cbturno;
     private com.toedter.calendar.JDateChooser dcfechacontratacion;
-    private com.toedter.calendar.JDateChooser dcfechafin;
+    private com.toedter.calendar.JDateChooser dcfechanacimiento;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblapellido;
     private javax.swing.JLabel lblcedula;

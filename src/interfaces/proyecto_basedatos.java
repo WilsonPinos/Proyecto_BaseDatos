@@ -6,6 +6,7 @@
 package interfaces;
 
 import java.awt.Color;
+import com.db4o.*;
 
 /**
  *
@@ -16,8 +17,10 @@ public class proyecto_basedatos extends javax.swing.JFrame {
     /**
      * Creates new form IniciarSesion
      */
+    public static String BDdireccion = "src/Base/ProyectoBase.yap";
     public proyecto_basedatos() {
         initComponents();
+        
     }
 
     /**

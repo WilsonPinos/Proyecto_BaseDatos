@@ -5,6 +5,10 @@
  */
 package interfaces;
 
+import com.db4o.*;
+import javax.swing.JOptionPane;
+import proyecto_basedatos.Cajero;
+
 /**
  *
  * @author Wilson Pinos
@@ -16,6 +20,31 @@ public class Ingreso_cajero extends javax.swing.JFrame {
      */
     public Ingreso_cajero() {
         initComponents();
+    }
+
+    public void CrearCajero(ObjectContainer base) {
+        int edad;
+        String auxedad = txtedad.getText();
+        edad = Integer.valueOf(auxedad);
+        Cajero Cruta = new Cajero(txtidcajero.getText(), txtcedula.getText(), txtnombre.getText(), txtapellido.getText(), txtcorreo.getText(), txtcelular.getText(), txtnivelestudio.getText(), cbturno.getSelectedItem().toString(), edad, dcfechanacimiento.getDate(), dcfechacontratacion.getDate());
+        Cajero Bruta = new Cajero(txtidcajero.getText(), null, null, null, null, null, null, null, 0, null, null);
+        ObjectSet resultado = base.get(Bruta);
+        if (resultado.isEmpty()) {
+            base.set(Cruta);
+            txtidcajero.setText("");
+            txtcedula.setText("");
+            txtnombre.setText("");
+            txtapellido.setText("");
+            txtcorreo.setText("");
+            txtcelular.setText("");
+            txtnivelestudio.setText("");
+            cbturno.setSelectedIndex(0);
+            txtedad.setText("");
+            dcfechanacimiento.setDate(null);
+            JOptionPane.showMessageDialog(this, "Registro exitoso");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ya existe un cajero con este ID");
+        }
     }
 
     /**
@@ -37,8 +66,8 @@ public class Ingreso_cajero extends javax.swing.JFrame {
         lblcelular = new javax.swing.JLabel();
         lbledad = new javax.swing.JLabel();
         lblfechanacimiento = new javax.swing.JLabel();
-        txtmatricula = new javax.swing.JTextField();
-        dcfechafin = new com.toedter.calendar.JDateChooser();
+        txtidcajero = new javax.swing.JTextField();
+        dcfechanacimiento = new com.toedter.calendar.JDateChooser();
         btnsalir = new javax.swing.JButton();
         btnguardar = new javax.swing.JButton();
         btnbuscar = new javax.swing.JButton();
@@ -52,7 +81,7 @@ public class Ingreso_cajero extends javax.swing.JFrame {
         txtnivelestudio = new javax.swing.JTextField();
         lblfechacontratacion = new javax.swing.JLabel();
         lblturno = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dcfechacontratacion = new com.toedter.calendar.JDateChooser();
         cbturno = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,8 +109,18 @@ public class Ingreso_cajero extends javax.swing.JFrame {
         btnsalir.setText("SALIR");
 
         btnguardar.setText("GUARDAR");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         btnbuscar.setText("BUSCAR");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         lblnivelestudio.setText("Nivel de estudio:");
 
@@ -89,7 +128,7 @@ public class Ingreso_cajero extends javax.swing.JFrame {
 
         lblturno.setText("Turno:");
 
-        cbturno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Mañana", "Tarde", "Noche." }));
+        cbturno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mañana", "Tarde", "Noche" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -122,8 +161,8 @@ public class Ingreso_cajero extends javax.swing.JFrame {
                             .addComponent(lblturno))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtmatricula)
-                            .addComponent(dcfechafin, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                            .addComponent(txtidcajero)
+                            .addComponent(dcfechanacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                             .addComponent(txtcedula)
                             .addComponent(txtnombre)
                             .addComponent(txtapellido)
@@ -131,7 +170,7 @@ public class Ingreso_cajero extends javax.swing.JFrame {
                             .addComponent(txtcelular)
                             .addComponent(txtedad)
                             .addComponent(txtnivelestudio)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dcfechacontratacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbturno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(155, Short.MAX_VALUE))
         );
@@ -142,7 +181,7 @@ public class Ingreso_cajero extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblidcajero)
-                    .addComponent(txtmatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtidcajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblcedula)
@@ -170,7 +209,7 @@ public class Ingreso_cajero extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblfechanacimiento)
-                    .addComponent(dcfechafin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dcfechanacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblnivelestudio)
@@ -178,7 +217,7 @@ public class Ingreso_cajero extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblfechacontratacion)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dcfechacontratacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblturno)
@@ -204,6 +243,62 @@ public class Ingreso_cajero extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        dispose();
+        Consulta_cajero cons = new Consulta_cajero();
+        cons.setVisible(true);
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        if (txtidcajero.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingresa un ID");
+        } else {
+            if (txtcedula.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa una cedula");
+            } else {
+                if (txtnombre.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(this, "Ingresa un nombre");
+                } else {
+                    if (txtapellido.getText().isBlank()) {
+                        JOptionPane.showMessageDialog(this, "Ingresa un apellido");
+                    } else {
+                        if (txtcorreo.getText().isBlank()) {
+                            JOptionPane.showMessageDialog(this, "Ingresa un correo");
+                        } else {
+                            if (txtcelular.getText().isBlank()) {
+                                JOptionPane.showMessageDialog(this, "Ingresa un celular");
+                            } else {
+                                if (txtedad.getText().isBlank()) {
+                                    JOptionPane.showMessageDialog(this, "Ingresa la edad");
+                                } else {
+                                    if (dcfechanacimiento.getDate().toString().isBlank()) {
+                                        JOptionPane.showMessageDialog(this, "Ingresa la fecha de nacimiento");
+                                    } else {
+                                        if (txtnivelestudio.getText().isBlank()) {
+                                            JOptionPane.showMessageDialog(this, "Ingresa el nivel de estudio");
+                                        } else {
+                                            if (dcfechacontratacion.getDate().toString().isBlank()) {
+                                                JOptionPane.showMessageDialog(this, "Ingresa la fecha de contratacion");
+                                            } else {
+                                                if (cbturno.getSelectedIndex() == 0) {
+                                                    JOptionPane.showMessageDialog(this, "Selecciona una fecha de contratacion");
+                                                } else {
+                                                    ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                                                    CrearCajero(base);
+                                                    CerrarBD(base);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_btnguardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,13 +336,17 @@ public class Ingreso_cajero extends javax.swing.JFrame {
         });
     }
 
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnbuscar;
     private javax.swing.JButton btnguardar;
     private javax.swing.JButton btnsalir;
     private javax.swing.JComboBox<String> cbturno;
-    private com.toedter.calendar.JDateChooser dcfechafin;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser dcfechacontratacion;
+    private com.toedter.calendar.JDateChooser dcfechanacimiento;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblapellido;
     private javax.swing.JLabel lblcedula;
@@ -266,7 +365,7 @@ public class Ingreso_cajero extends javax.swing.JFrame {
     private javax.swing.JTextField txtcelular;
     private javax.swing.JTextField txtcorreo;
     private javax.swing.JTextField txtedad;
-    private javax.swing.JTextField txtmatricula;
+    private javax.swing.JTextField txtidcajero;
     private javax.swing.JTextField txtnivelestudio;
     private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables

@@ -68,8 +68,8 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtmatricula" alignment="0" max="32767" attributes="0"/>
-                              <Component id="dcfechafin" alignment="0" pref="136" max="32767" attributes="0"/>
+                              <Component id="txtidcajero" alignment="0" max="32767" attributes="0"/>
+                              <Component id="dcfechanacimiento" alignment="0" pref="136" max="32767" attributes="0"/>
                               <Component id="txtcedula" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtnombre" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtapellido" alignment="0" max="32767" attributes="0"/>
@@ -77,7 +77,7 @@
                               <Component id="txtcelular" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtedad" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtnivelestudio" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jDateChooser1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="dcfechacontratacion" alignment="0" max="32767" attributes="0"/>
                               <Component id="cbturno" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -93,7 +93,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblidcajero" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtmatricula" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtidcajero" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -128,7 +128,7 @@
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblfechanacimiento" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="dcfechafin" min="-2" max="-2" attributes="0"/>
+                      <Component id="dcfechanacimiento" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -138,7 +138,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="lblfechacontratacion" min="-2" max="-2" attributes="0"/>
-                      <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
+                      <Component id="dcfechacontratacion" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -206,9 +206,9 @@
             <Property name="text" type="java.lang.String" value="Fecha de nacimiento:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtmatricula">
+        <Component class="javax.swing.JTextField" name="txtidcajero">
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="dcfechafin">
+        <Component class="com.toedter.calendar.JDateChooser" name="dcfechanacimiento">
         </Component>
         <Component class="javax.swing.JButton" name="btnsalir">
           <Properties>
@@ -219,11 +219,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="GUARDAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnguardarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnbuscar">
           <Properties>
             <Property name="text" type="java.lang.String" value="BUSCAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnbuscarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtcedula">
         </Component>
@@ -254,16 +260,15 @@
             <Property name="text" type="java.lang.String" value="Turno:"/>
           </Properties>
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+        <Component class="com.toedter.calendar.JDateChooser" name="dcfechacontratacion">
         </Component>
         <Component class="javax.swing.JComboBox" name="cbturno">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value=""/>
-                <StringItem index="1" value="Ma&#xf1;ana"/>
-                <StringItem index="2" value="Tarde"/>
-                <StringItem index="3" value="Noche."/>
+              <StringArray count="3">
+                <StringItem index="0" value="Ma&#xf1;ana"/>
+                <StringItem index="1" value="Tarde"/>
+                <StringItem index="2" value="Noche"/>
               </StringArray>
             </Property>
           </Properties>

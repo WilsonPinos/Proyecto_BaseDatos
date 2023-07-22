@@ -5,6 +5,17 @@
  */
 package interfaces;
 
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import proyecto_basedatos.Cajero;
+
 /**
  *
  * @author Wilson Pinos
@@ -14,8 +25,82 @@ public class Consulta_cajero extends javax.swing.JFrame {
     /**
      * Creates new form Consulta_bus
      */
+    private Modificar_cajero modificar;
+    private String id = "";
+    private String cedula = "";
+    private String nombre = "";
+    private String apellido = "";
+    private String correo = "";
+    private String celular = "";
+    private String nivel_est = "";
+    private String turno = "";
+    private int edad = 1;
+    private Date fecha_nac = null;
+    private Date fec_contrat = null;
+
     public Consulta_cajero() {
         initComponents();
+        BuscarCajero();
+        tblcajero.addMouseListener(new MouseAdapter() {
+            DefaultTableModel model = new DefaultTableModel();
+
+            public void mouseClicked(MouseEvent e) {
+                int i = tblcajero.getSelectedRow();
+                id = tblcajero.getValueAt(i, 0).toString();
+                cedula = tblcajero.getValueAt(i, 1).toString();
+                nombre = tblcajero.getValueAt(i, 3).toString();
+                apellido = tblcajero.getValueAt(i, 4).toString();
+                correo = tblcajero.getValueAt(i, 5).toString();
+                celular = tblcajero.getValueAt(i, 6).toString();
+                nivel_est = tblcajero.getValueAt(i, 7).toString();
+                turno = tblcajero.getValueAt(i, 8).toString();
+                edad = (int) tblcajero.getValueAt(i, 9);
+                fecha_nac = (Date) tblcajero.getValueAt(i, 10);
+                fec_contrat = (Date) tblcajero.getValueAt(i, 11);
+            }
+
+        });
+    }
+
+    public void setModificar_cajero(Modificar_cajero modificar) {
+        this.modificar = modificar;
+    }
+
+    public void BuscarCajero() {
+
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Cajero caje = new Cajero(null, null, null, null, null, null, null, null, 0, null, null);
+        ObjectSet resultado = base.get(caje);
+        String matriz[][] = new String[resultado.size()][11];
+        int i = 0;
+        while (resultado.hasNext()) {
+            Cajero tablacajero = (Cajero) resultado.next();
+            matriz[i][0] = tablacajero.getId_cajero();
+            matriz[i][1] = tablacajero.getCedula();
+            matriz[i][2] = tablacajero.getNombre();
+            matriz[i][3] = tablacajero.getApellido();
+            matriz[i][4] = tablacajero.getCorreo();
+            matriz[i][5] = tablacajero.getCelular();
+            matriz[i][6] = tablacajero.getNivel_estudio();
+            matriz[i][7] = tablacajero.getTurno();
+            //de int a string para la matriz de strings
+            int auxedad = tablacajero.getEdad();
+            String edad = Integer.toString(auxedad);
+            matriz[i][8] = edad;
+            //de date a string
+            Date auxnacim = tablacajero.getNacimiento();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            String nacim = formatoFecha.format(auxnacim);
+            matriz[i][9] = nacim;
+            Date auxfec_cont = tablacajero.getFec_contratacion();
+            String fec_cont = formatoFecha.format(auxfec_cont);
+            matriz[i][10] = fec_cont;
+
+            i++;
+
+        }
+        tblcajero.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID", "Cedula", "Nombre", "Apellido", "Correo", "Celular", "Nivel de estudio", "Turno", "Edad", "Fecha de nacimiento", "Fecha de contratacion"}));
+        CerrarBD(base);
     }
 
     /**
@@ -57,12 +142,32 @@ public class Consulta_cajero extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblcajero);
 
         btnbuscar.setText("BUSCAR");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         btnregresar.setText("REGRESAR");
+        btnregresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregresarActionPerformed(evt);
+            }
+        });
 
         btnborrar.setText("BORRAR");
+        btnborrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnborrarActionPerformed(evt);
+            }
+        });
 
         btnmodificar.setText("MODIFICAR");
+        btnmodificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmodificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,6 +228,76 @@ public class Consulta_cajero extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
+        dispose();
+        Ingreso_cajero ing = new Ingreso_cajero();
+        ing.setVisible(true);
+    }//GEN-LAST:event_btnregresarActionPerformed
+
+    private void btnborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnborrarActionPerformed
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Cajero Bcajero = new Cajero(id, null, null, null, null, null, null, null, 0, null, null);
+        ObjectSet resultado = base.get(Bcajero);
+        while (resultado.hasNext()) {
+            Cajero Bcaje = (Cajero) resultado.next();
+            if (JOptionPane.showConfirmDialog(rootPane, "¿Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                if (id.equals(Bcaje.getId_cajero())) {
+                    base.delete(Bcaje);
+
+                }
+            }
+        }
+        CerrarBD(base);
+        BuscarCajero();
+    }//GEN-LAST:event_btnborrarActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Cajero caje = new Cajero(null, null, null, null, null, null, null, null, 0, null, null);
+        ObjectSet resultado = base.get(caje);
+        String matriz[][] = new String[resultado.size()][2];
+        int i = 0;
+        while (resultado.hasNext()) {
+            Cajero tablacajero = (Cajero) resultado.next();
+            if (tablacajero.getCedula().toLowerCase().contains(txtbuscar.getText().toLowerCase())) {
+                matriz[i][0] = tablacajero.getId_cajero();
+                matriz[i][1] = tablacajero.getCedula();
+                matriz[i][2] = tablacajero.getNombre();
+                matriz[i][3] = tablacajero.getApellido();
+                matriz[i][4] = tablacajero.getCorreo();
+                matriz[i][5] = tablacajero.getCelular();
+                matriz[i][6] = tablacajero.getNivel_estudio();
+                matriz[i][7] = tablacajero.getTurno();
+                //de int a string para la matriz de strings
+                int auxedad = tablacajero.getEdad();
+                String edad = Integer.toString(auxedad);
+                matriz[i][8] = edad;
+                //de date a string
+                Date auxnacim = tablacajero.getNacimiento();
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+                String nacim = formatoFecha.format(auxnacim);
+                matriz[i][9] = nacim;
+                Date auxfec_cont = tablacajero.getFec_contratacion();
+                String fec_cont = formatoFecha.format(auxfec_cont);
+                matriz[i][10] = fec_cont;
+                i++;
+            }
+        }
+        tblcajero.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID", "Cedula", "Nombre", "Apellido", "Correo", "Celular", "Nivel de estudio", "Turno", "Edad", "Fecha de nacimiento", "Fecha de contratacion"}));
+        CerrarBD(base);
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
+    private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
+        if(!id.isBlank()){
+        dispose();
+        Modificar_cajero modi = new Modificar_cajero();
+        modi.recibirCodigo(id,cedula,nombre,apellido,correo,celular,nivel_est,turno,edad,fecha_nac,fec_contrat); // Envía el valor 
+        modi.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Para modificar, primero selecciona un registro");
+        }
+    }//GEN-LAST:event_btnmodificarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -157,6 +332,10 @@ public class Consulta_cajero extends javax.swing.JFrame {
                 new Consulta_cajero().setVisible(true);
             }
         });
+    }
+
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

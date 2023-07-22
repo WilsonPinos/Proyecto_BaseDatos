@@ -5,6 +5,10 @@
  */
 package interfaces;
 
+import com.db4o.*;
+import javax.swing.JOptionPane;
+import proyecto_basedatos.Ruta;
+
 /**
  *
  * @author Wilson Pinos
@@ -16,6 +20,24 @@ public class Ingreso_ruta extends javax.swing.JFrame {
      */
     public Ingreso_ruta() {
         initComponents();
+        
+    }
+    public void Crear_Ruta(ObjectContainer base) {
+        double distancia;
+        String auxdis = txtdistancia.getText();
+        distancia = Double.valueOf(auxdis);
+        Ruta Cruta = new Ruta(txtcodigo.getText(), txtorigen.getText(), distancia);
+        Ruta Bruta = new Ruta(txtcodigo.getText(), null, 0);
+        ObjectSet resultado = base.get(Bruta);
+        if (resultado.isEmpty()) {
+            base.set(Cruta);
+            txtcodigo.setText("");
+            txtorigen.setText("");
+            txtdistancia.setText("");
+            JOptionPane.showMessageDialog(this, "Registro exitoso");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ya existe una ruta con este codigo");
+        }
     }
 
     /**
@@ -53,8 +75,18 @@ public class Ingreso_ruta extends javax.swing.JFrame {
         btnsalir.setText("SALIR");
 
         btnguardar.setText("GUARDAR");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         btnbuscar.setText("BUSCAR");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         lbldistancia.setText("Distancia:");
 
@@ -138,6 +170,30 @@ public class Ingreso_ruta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        if (txtcodigo.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingresa un codigo");
+        } else {
+            if (txtorigen.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa un origen");
+            } else {
+                if(txtdistancia.getText().isBlank()){
+                    JOptionPane.showMessageDialog(this, "Ingresa una distancia");
+                } else {
+                ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                Crear_Ruta(base);
+                CerrarBD(base);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        dispose();
+        Consulta_ruta cons = new Consulta_ruta();
+        cons.setVisible(true);
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -174,6 +230,9 @@ public class Ingreso_ruta extends javax.swing.JFrame {
                 new Ingreso_ruta().setVisible(true);
             }
         });
+    }
+        public static void CerrarBD(ObjectContainer base) {
+        base.close();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
