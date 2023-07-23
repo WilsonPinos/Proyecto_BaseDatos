@@ -5,6 +5,14 @@
  */
 package interfaces;
 
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import static interfaces.Ingreso_cliente.CerrarBD;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import proyecto_basedatos.Cliente;
+
 /**
  *
  * @author Wilson Pinos
@@ -16,6 +24,39 @@ public class Modificar_cliente extends javax.swing.JFrame {
      */
     public Modificar_cliente() {
         initComponents();
+        dcfechafin.setMaxSelectableDate(new Date());
+    }
+
+    public void recibirCodigo(String id_cliente, String Cedula, String nombre, String apellido, String celular, String correo, int edad, Date nacimiento) {
+        txtidcliente.setText(id_cliente);
+        txtcedula.setText(Cedula);
+        txtnombre.setText(nombre);
+        txtapellido.setText(apellido);
+        txtcelular.setText(celular);
+        txtcorreo.setText(correo);
+        String auxedad = String.valueOf(edad);
+        txtedad.setText(auxedad);
+        dcfechafin.setDate(nacimiento);
+
+    }
+
+    public void ModificarCliente(ObjectContainer base) {
+
+        Cliente client = new Cliente(txtidcliente.getText(), null, null, null, null, null, 0, null);
+        ObjectSet resultado = base.get(client);
+        Cliente cliente1 = (Cliente) resultado.next();
+        cliente1.setNombre_cli(txtnombre.getText());
+        cliente1.setApellido_cli(txtapellido.getText());
+        cliente1.setCorreo_cli(txtcorreo.getText());
+        cliente1.setTelefono_cli(txtcelular.getText());
+        String auxedad = txtedad.getText();
+        int edad = Integer.valueOf(auxedad);
+        cliente1.setEdad_cli(edad);
+        cliente1.setFecha_nacimiento(dcfechafin.getDate());
+        base.set(cliente1);
+
+        JOptionPane.showMessageDialog(this, "Modificacion exitosa");
+
     }
 
     /**
@@ -71,8 +112,18 @@ public class Modificar_cliente extends javax.swing.JFrame {
         lblfechanac.setText("Fecha de nacimiento:");
 
         btnsalir.setText("SALIR");
+        btnsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsalirActionPerformed(evt);
+            }
+        });
 
         btnguardar.setText("GUARDAR");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -164,6 +215,37 @@ public class Modificar_cliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        Date fechaSeleccionada = dcfechafin.getDate();
+        if (txtidcliente.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingresa el codigo del cliente");
+        } else {
+            if (txtcedula.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa la cedula del cliente");
+            } else if (txtnombre.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el nombre del cliente");
+            } else if (txtapellido.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el apellido del cliente");
+            } else if (txtedad.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa la edad  del cliente");
+            } else if (txtcorreo.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el correo del cliente");
+            } else if (txtcelular.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el celular del cliente");
+            } else if (fechaSeleccionada == null) {
+                JOptionPane.showMessageDialog(this, "Ingresa la fecha de nacimiento del cliente");
+            } else {
+                ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                ModificarCliente(base);
+                CerrarBD(base);
+            }
+        }
+    }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsalirActionPerformed
 
     /**
      * @param args the command line arguments

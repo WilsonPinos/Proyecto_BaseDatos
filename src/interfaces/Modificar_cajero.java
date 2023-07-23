@@ -125,6 +125,11 @@ public class Modificar_cajero extends javax.swing.JFrame {
         });
 
         btnguardar.setText("GUARDAR");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         lblnivelestudio.setText("Nivel de estudio:");
 
@@ -250,6 +255,10 @@ public class Modificar_cajero extends javax.swing.JFrame {
         Consulta_cajero consu = new Consulta_cajero();
         consu.setVisible(true);
     }//GEN-LAST:event_btnregresarActionPerformed
+
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnguardarActionPerformed
 
     /**
      * @param args the command line arguments

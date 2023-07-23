@@ -126,6 +126,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="BUSCAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnbuscarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtbuscar">
         </Component>
@@ -138,11 +141,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="BORRAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnborrarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnmodificar">
           <Properties>
             <Property name="text" type="java.lang.String" value="MODIFICAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnmodificarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

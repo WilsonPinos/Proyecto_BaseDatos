@@ -41,6 +41,14 @@
               <Component id="lbltitulo" alignment="0" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
+                          <Component id="btnsalir" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnguardar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                          <Component id="btnbuscar" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -56,22 +64,14 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txtidcliente" alignment="0" max="32767" attributes="0"/>
-                              <Component id="dcfechafin" alignment="0" pref="136" max="32767" attributes="0"/>
+                              <Component id="dcfechafin" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtcedula" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtnombre" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtapellido" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtcorreo" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtcelular" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtedad" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtapellido" pref="136" max="32767" attributes="0"/>
+                              <Component id="txtcorreo" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
-                          <Component id="btnsalir" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                          <Component id="btnguardar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                          <Component id="btnbuscar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="155" max="32767" attributes="0"/>
@@ -209,16 +209,19 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtcedula">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtcedulaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtnombre">
         </Component>
         <Component class="javax.swing.JTextField" name="txtapellido">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtcorreo">
-        </Component>
         <Component class="javax.swing.JTextField" name="txtcelular">
         </Component>
         <Component class="javax.swing.JTextField" name="txtedad">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtcorreo">
         </Component>
       </SubComponents>
     </Container>

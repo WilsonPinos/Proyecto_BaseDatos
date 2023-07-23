@@ -18,7 +18,7 @@ public class Ingreso_cliente extends javax.swing.JFrame {
         // desahaabilitar fechas anteriores
         //dcfechafin.setMinSelectableDate(new Date());
         //desahabilitar fechas posteriores
-        //dcfechafin.setMaxSelectableDate(new Date());
+       // dcfechafin.setMaxSelectableDate(new Date());
 
     }
 
@@ -49,9 +49,9 @@ public class Ingreso_cliente extends javax.swing.JFrame {
         txtcedula = new javax.swing.JTextField();
         txtnombre = new javax.swing.JTextField();
         txtapellido = new javax.swing.JTextField();
-        txtcorreo = new javax.swing.JTextField();
         txtcelular = new javax.swing.JTextField();
         txtedad = new javax.swing.JTextField();
+        txtcorreo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +91,12 @@ public class Ingreso_cliente extends javax.swing.JFrame {
             }
         });
 
+        txtcedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtcedulaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -98,6 +104,13 @@ public class Ingreso_cliente extends javax.swing.JFrame {
             .addComponent(lbltitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(btnsalir)
+                        .addGap(53, 53, 53)
+                        .addComponent(btnguardar)
+                        .addGap(56, 56, 56)
+                        .addComponent(btnbuscar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(147, 147, 147)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,20 +125,13 @@ public class Ingreso_cliente extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtidcliente)
-                            .addComponent(dcfechafin, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                            .addComponent(dcfechafin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtcedula)
                             .addComponent(txtnombre)
-                            .addComponent(txtapellido)
-                            .addComponent(txtcorreo)
                             .addComponent(txtcelular)
-                            .addComponent(txtedad)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(btnsalir)
-                        .addGap(53, 53, 53)
-                        .addComponent(btnguardar)
-                        .addGap(56, 56, 56)
-                        .addComponent(btnbuscar)))
+                            .addComponent(txtedad)
+                            .addComponent(txtapellido, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                            .addComponent(txtcorreo))))
                 .addContainerGap(155, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -187,6 +193,7 @@ public class Ingreso_cliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+          Date fechaSeleccionada = dcfechafin.getDate();
         if (txtidcliente.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "Ingresa el codigo del cliente");
         } else {
@@ -202,11 +209,11 @@ public class Ingreso_cliente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Ingresa el correo del cliente");
             } else if (txtcelular.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Ingresa el celular del cliente");
-            } else if (dcfechafin.getDate()) {
+            } else if (fechaSeleccionada == null) {
                 JOptionPane.showMessageDialog(this, "Ingresa la fecha de nacimiento del cliente");
             } else {
                 ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
-                CrearAgencia(base);
+                CrearCliente(base);
                 CerrarBD(base);
             }
         }
@@ -216,6 +223,10 @@ public class Ingreso_cliente extends javax.swing.JFrame {
         Consulta_cliente con = new Consulta_cliente();
         con.setVisible(true);
     }//GEN-LAST:event_btnbuscarActionPerformed
+
+    private void txtcedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcedulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcedulaActionPerformed
 
     private void txtcodigoKeyTyped(java.awt.event.KeyEvent evt) {
         char letra = evt.getKeyChar();
@@ -266,10 +277,13 @@ public class Ingreso_cliente extends javax.swing.JFrame {
         });
     }
 
-    public void CrearAgencia(ObjectContainer base) {
+    public void CrearCliente(ObjectContainer base) {
 //String Id_cliente, String cedula_cli, String nombre_cli, String apellido_cli, String telefono_cli, String correo_cli, int edad_cli, Date fecha_nacimiento) {
+        int edad;
+        String auxedad = txtedad.getText();
+        edad = Integer.valueOf(auxedad);
 
-        Cliente cliente1 = new Cliente(txtidcliente.getText(), txtcedula.getText(), txtnombre.getText(), txtapellido.getText(), txtcelular.getText(), txtcorreo.getText(), txtedad.getText(), dcfechafin);
+        Cliente cliente1 = new Cliente(txtidcliente.getText(), txtcedula.getText(), txtnombre.getText(), txtapellido.getText(), txtcelular.getText(), txtcorreo.getText(),edad, dcfechafin.getDate());
         Cliente cli = new Cliente(txtidcliente.getText(), null, null, null, null, null, 0, null);
         ObjectSet resultado = base.get(cli);
         if (resultado.isEmpty()) {
@@ -281,7 +295,7 @@ public class Ingreso_cliente extends javax.swing.JFrame {
             txtcelular.setText("");
             txtcorreo.setText(" ");
             txtedad.setText(" ");
-            //dcfechafin.set
+            dcfechafin.setMaxSelectableDate(new Date());
             JOptionPane.showMessageDialog(this, "Registro exitoso");
         } else {
             JOptionPane.showMessageDialog(this, "Ya existe un cliente con este codigo");

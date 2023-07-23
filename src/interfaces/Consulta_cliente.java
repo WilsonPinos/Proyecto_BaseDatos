@@ -5,17 +5,101 @@
  */
 package interfaces;
 
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import proyecto_basedatos.Cliente;
+
 /**
  *
  * @author Wilson Pinos
  */
 public class Consulta_cliente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Consulta_bus
-     */
+    private String idcliente = "";
+    private String cedula = "";
+    private String nombre = "";
+    private String apellido = "";
+    private String telefono= " ";
+    private int edad=0;
+    private String correo = "";
+    private Date nacimiento=null;
+
+    private Modificar_cliente modificar;
+
     public Consulta_cliente() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        BuscarCliente();
+        tblcliente.addMouseListener(new MouseAdapter() {
+            DefaultTableModel model = new DefaultTableModel();
+
+            public void mouseClicked(MouseEvent e) {
+                int i = tblcliente.getSelectedRow();
+                idcliente = tblcliente.getValueAt(i, 0).toString();
+                cedula = tblcliente.getValueAt(i, 1).toString();
+                nombre = tblcliente.getValueAt(i, 2).toString();
+                apellido = tblcliente.getValueAt(i, 3).toString();
+                cedula = tblcliente.getValueAt(i, 4).toString();
+                correo = tblcliente.getValueAt(i, 5).toString();
+                String auxedad = tblcliente.getValueAt(i, 6).toString();
+                edad = Integer.valueOf(auxedad);
+
+                String naci = tblcliente.getValueAt(i, 7).toString();
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd MM yyyy");
+                try {
+                    nacimiento = formatoFecha.parse(naci);
+                } catch (ParseException e1) {
+                    System.out.println("Error");
+                }
+
+            }
+
+        });
+
+    }
+
+    public void setModificar_cliente(Modificar_cliente modificar) {
+        this.modificar = modificar;
+    }
+
+    public void BuscarCliente() {
+//String Id_cliente, String cedula_cli, String nombre_cli, String apellido_cli, String telefono_cli, String correo_cli, int edad_cli, Date fecha_nacimiento) {
+
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Cliente cli = new Cliente(null, null, null, null, null, null, 0, null);
+        ObjectSet resultado = base.get(cli);
+        String matriz[][] = new String[resultado.size()][8];
+        int i = 0;
+        while (resultado.hasNext()) {
+            Cliente cliente1 = (Cliente) resultado.next();
+            matriz[i][0] = cliente1.getId_cliente();
+            matriz[i][1] = cliente1.getCedula_cli();
+            matriz[i][2] = cliente1.getNombre_cli();
+            matriz[i][3] = cliente1.getApellido_cli();
+            matriz[i][4] = cliente1.getCorreo_cli();
+            matriz[i][5] = cliente1.getTelefono_cli();
+            int auxedad = cliente1.getEdad_cli();
+            String edad = Integer.toString(auxedad);
+            matriz[i][6] = edad;
+
+            Date auxnacim = cliente1.getFecha_nacimiento();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            String nacim = formatoFecha.format(auxnacim);
+            matriz[i][7] = nacim;
+
+            i++;
+
+        }
+        tblcliente.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID", "Cedula", "Nombre", "Apellido", "Correo", "Celular", "Edad", "Fecha de nacimiento"}));
+        CerrarBD(base);
     }
 
     /**
@@ -57,12 +141,27 @@ public class Consulta_cliente extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblcliente);
 
         btnbuscar.setText("BUSCAR");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         btnregresar.setText("REGRESAR");
 
         btnborrar.setText("BORRAR");
+        btnborrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnborrarActionPerformed(evt);
+            }
+        });
 
         btnmodificar.setText("MODIFICAR");
+        btnmodificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmodificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,6 +222,65 @@ public class Consulta_cliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Cliente clie = new Cliente(null, null, null, null, null, null, 0, null);
+        ObjectSet resultado = base.get(clie);
+        String matriz[][] = new String[resultado.size()][8];
+        int i = 0;
+        while (resultado.hasNext()) {
+            Cliente clientes = (Cliente) resultado.next();
+            if (clientes.getCedula_cli().toLowerCase().contains(txtbuscar.getText().toLowerCase())) {
+                matriz[i][0] = clientes.getId_cliente();
+                matriz[i][1] = clientes.getCedula_cli();
+                matriz[i][2] = clientes.getNombre_cli();
+                matriz[i][3] = clientes.getApellido_cli();
+                matriz[i][4] = clientes.getCorreo_cli();
+                matriz[i][5] = clientes.getTelefono_cli();
+                int auxedad = clientes.getEdad_cli();
+                String edad = Integer.toString(auxedad);
+                matriz[i][6] = edad;
+
+                Date auxnacim = clientes.getFecha_nacimiento();
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+                String nacim = formatoFecha.format(auxnacim);
+                matriz[i][7] = nacim;
+                i++;
+            }
+        }
+        tblcliente.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID", "Cedula", "Nombre", "Apellido", "Correo", "Celular", "Nivel de estudio", "Turno", "Edad", "Fecha de nacimiento", "Fecha de contratacion"}));
+        CerrarBD(base);
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
+    private void btnborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnborrarActionPerformed
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Cliente client = new Cliente(idcliente, null, null, null, null, null, 0, null);
+        ObjectSet resultado = base.get(client);
+        while (resultado.hasNext()) {
+            Cliente cliente1 = (Cliente) resultado.next();
+            if (JOptionPane.showConfirmDialog(rootPane, "¿Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                if (idcliente.equals(cliente1.getId_cliente())) {
+                    base.delete(cliente1);
+
+                }
+            }
+        }
+        CerrarBD(base);
+        BuscarCliente();
+
+    }//GEN-LAST:event_btnborrarActionPerformed
+
+    private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
+        if (!idcliente.isBlank()) {
+            dispose();
+            Modificar_cliente modi = new Modificar_cliente();
+            modi.recibirCodigo(idcliente, cedula, nombre, apellido, correo, telefono, edad, nacimiento); // Envía el valor 
+            modi.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Para modificar, primero selecciona un registro");
+        }
+    }//GEN-LAST:event_btnmodificarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -160,6 +318,11 @@ public class Consulta_cliente extends javax.swing.JFrame {
             }
         });
     }
+
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnborrar;
