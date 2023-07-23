@@ -27,6 +27,7 @@ public class Ingreso_bus extends javax.swing.JFrame {
      */
     public Ingreso_bus() {
         initComponents();
+        
         ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
         Agencia Bagencia = new Agencia(null, null, null, null, null);
         ObjectSet result= base.get(Bagencia);
@@ -43,10 +44,9 @@ public class Ingreso_bus extends javax.swing.JFrame {
             cbruta.addItem(rut.getOrigen());
         }
         
-        
         CerrarBD(base);
     }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -123,6 +123,11 @@ public class Ingreso_bus extends javax.swing.JFrame {
         });
 
         btnbuscar.setText("BUSCAR");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Hora ingreso:");
 
@@ -257,10 +262,10 @@ public class Ingreso_bus extends javax.swing.JFrame {
                     if (txtcapacidad.getText().isBlank()) {
                         JOptionPane.showMessageDialog(this, "Ingresa la capacidad");
                     } else {
-                        if (false) {
+                        if (cbagencia.getSelectedItem().toString().isEmpty()) {
                             JOptionPane.showMessageDialog(this, "Selecciona una agencia");
                         } else {
-                            if (false) {
+                            if (cbruta.getSelectedItem().toString().isEmpty()) {
                                 JOptionPane.showMessageDialog(this, "Selecciona una ruta");
                             } else {
                                 if (txthorasalida.getText().isBlank()) {
@@ -289,6 +294,10 @@ public class Ingreso_bus extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        
+    }//GEN-LAST:event_btnbuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,9 +342,15 @@ public class Ingreso_bus extends javax.swing.JFrame {
         Bus Cbus = new Bus(nuB, capB, txtmatricula.getText(), cbcolor.getSelectedItem().toString());
         Bus Bbus = new Bus(0, 0, txtmatricula.getText(), null);
         ObjectSet resultado = base.get(Bbus);
-        String idhorario = "1";
-        String idcontrato = "1";
+        Registro_contrato Bregnum = new Registro_contrato(null, null, null, null, null);
+        ObjectSet resultadonum = base.get(Bregnum);
+        int auxidhorario = resultadonum.size()+1;
+        int auxidcontrato = resultadonum.size()+1;
+        String idhorario = String.valueOf(auxidhorario);
+        String idcontrato = String.valueOf(auxidcontrato);
+        
         Agencia Bagencia = new Agencia(null, cbagencia.getSelectedItem().toString(), null, null, null);
+        
         ObjectSet resultado2 = base.get(Bagencia);
         Agencia agencia = (Agencia) resultado2.next();
         String idagencia = agencia.getId_agencia();
@@ -352,23 +367,8 @@ public class Ingreso_bus extends javax.swing.JFrame {
 
         if (resultado.isEmpty()) {
             if (resultado1.isEmpty() && resultado3.isEmpty()) {
-                do {
-                    int auxidhorario = Integer.valueOf(idhorario);
-                    auxidhorario++;
-                    idcontrato = String.valueOf(auxidhorario);
-                    CrearHorario(base, idhorario);
-                    Bhorario.setId_turno(idhorario);
-                    resultado3 = base.get(Bhorario);
-                } while (!resultado3.isEmpty());
                 base.set(Chorario);
-                do {
-                    int auxidcontrato = Integer.valueOf(idcontrato);
-                    auxidcontrato++;
-                    idcontrato = String.valueOf(auxidcontrato);
-                    CrearRegistro(base, idcontrato);
-                    Breg.setId_contrato(idcontrato);
-                    resultado1 = base.get(Breg);
-                } while (!resultado1.isEmpty());
+                base.set(Creg);
                 base.set(Cbus);
             } else {
                 System.out.println("ERROR ya existe este ID");

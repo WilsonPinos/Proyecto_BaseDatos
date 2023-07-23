@@ -5,6 +5,21 @@
  */
 package interfaces;
 
+import com.db4o.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
+import proyecto_basedatos.Agencia;
+import proyecto_basedatos.Bus;
+import proyecto_basedatos.Horario;
+import proyecto_basedatos.Registro_contrato;
+import proyecto_basedatos.Ruta;
+
 /**
  *
  * @author Wilson Pinos
@@ -14,8 +29,127 @@ public class Consulta_bus extends javax.swing.JFrame {
     /**
      * Creates new form Consulta_bus
      */
+    private Modificar_bus modificar;
+
+    private String matricula = "";
+    private String color_bus = "";
+    private int cantidad_pas;
+    private int num_bus;
+    private String agencia = "";
+    private String ruta = "";
+    private LocalTime hora_salida = null;
+    private LocalTime hora_regreso = null;
+    private Date fecha_obtencion = null;
+    private Date fecha_fin = null;
+
     public Consulta_bus() {
         initComponents();
+
+        BuscarBus();
+        tblbus.addMouseListener(new MouseAdapter() {
+            DefaultTableModel model = new DefaultTableModel();
+
+            
+public void mouseClicked(MouseEvent e) {
+    int i = tblbus.getSelectedRow();
+    matricula = tblbus.getValueAt(i, 0).toString();
+    color_bus = tblbus.getValueAt(i, 1).toString();
+    String auxcantidad = tblbus.getValueAt(i, 3).toString();
+    cantidad_pas = Integer.valueOf(auxcantidad);
+    String auxnumbus = tblbus.getValueAt(i, 2).toString();
+    num_bus = Integer.valueOf(auxnumbus);
+    agencia = tblbus.getValueAt(i, 4).toString();
+    ruta = tblbus.getValueAt(i, 5).toString();
+
+    // Obtener hora de salida
+    String auxhorasalida = tblbus.getValueAt(i, 6).toString();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    hora_salida = LocalTime.parse(auxhorasalida, formatter);
+
+    // Obtener hora de regreso
+    String auxhoraingreso = tblbus.getValueAt(i, 7).toString();
+    hora_regreso = LocalTime.parse(auxhoraingreso, formatter);
+
+    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+
+    // Obtener fecha de obtencion
+    String auxfecha_obt = tblbus.getValueAt(i, 8).toString();
+    try {
+        fecha_obtencion = formatoFecha.parse(auxfecha_obt);
+    } catch (ParseException e11) {
+        System.out.println("Error al convertir el String a Date: ");
+    }
+
+    // Obtener fecha de fin
+    String auxfecha_fin = tblbus.getValueAt(i, 9).toString();
+    try {
+        fecha_fin = formatoFecha.parse(auxfecha_fin);
+    } catch (ParseException e22) {
+        System.out.println("Error al convertir el String a Date: ");
+    }
+}
+
+        });
+
+    }
+
+    public void BuscarBus() {
+
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Bus Bbus = new Bus(0, 0, null, null);
+        ObjectSet resultado = base.get(Bbus);
+        Registro_contrato Breg = new Registro_contrato(null, null, null, null, null);
+        ObjectSet resultado1 = base.get(Breg);
+        Horario Bhorario = new Horario(null, null, null);
+        ObjectSet resultado2 = base.get(Bhorario);
+        Agencia Bagencia = new Agencia (null,null,null,null,null);
+        ObjectSet resultado3 = base.get(Bagencia);
+        Ruta Bruta = new Ruta(null, null, 0);
+        ObjectSet resultado4 = base.get(Bruta);
+        
+        String matriz[][] = new String[resultado.size()][12];
+        
+
+        int i = 0;
+        Agencia tablabus3 = (Agencia) resultado3.next();
+            Ruta tablabus4 = (Ruta) resultado4.next();
+        while (resultado.hasNext()) {
+            Bus tablabus = (Bus) resultado.next();
+            Registro_contrato tablabus1 = (Registro_contrato) resultado1.next();
+            Horario tablabus2 = (Horario) resultado2.next();
+            
+
+            matriz[i][0] = tablabus.getMatricula();
+            matriz[i][1] = tablabus.getColor_bus();
+            int axnumbus = tablabus.getNum_bus();
+            matriz[i][2] = String.valueOf(axnumbus);
+            int auxcantidad = tablabus.getCantidad_pas();
+            matriz[i][3] = String.valueOf(auxcantidad);
+            
+            
+            matriz[i][4] = tablabus3.getNombre_agencia();
+            matriz[i][5] = tablabus4.getOrigen();
+            
+            
+            matriz[i][6] = tablabus1.getId_contrato();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date auxfecha_cont = tablabus1.getFecha_contrato();
+            matriz[i][7] = dateFormat.format(auxfecha_cont);
+            Date auxfecha_exo = tablabus1.getFecha_exo_contra();
+            matriz[i][8] = dateFormat.format(auxfecha_exo);
+            matriz[i][9] = tablabus2.getId_turno();
+            String formato = "HH:mm:ss";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formato);
+            LocalTime auxfecha_ing = tablabus2.getFecha_ingreso();
+            matriz[i][10] = auxfecha_ing.format(formatter);
+            LocalTime auxfecha_salida = tablabus2.getFecha_salida();
+            matriz[i][11] = auxfecha_salida.format(formatter);
+
+            i++;
+
+        }
+        tblbus.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Matricula", "Color", "Numero", "Capacidad", "Agencia" , "Ruta" , "ID contrato", "Fecha de contrato", "Fecha fin de contrato", "ID horario", "Hora ingreso", "Hora salida"}));
+        CerrarBD(base);
     }
 
     /**
@@ -156,6 +290,10 @@ public class Consulta_bus extends javax.swing.JFrame {
                 new Consulta_bus().setVisible(true);
             }
         });
+    }
+
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
