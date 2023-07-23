@@ -10,6 +10,7 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -48,15 +49,28 @@ public class Consulta_cajero extends javax.swing.JFrame {
                 int i = tblcajero.getSelectedRow();
                 id = tblcajero.getValueAt(i, 0).toString();
                 cedula = tblcajero.getValueAt(i, 1).toString();
-                nombre = tblcajero.getValueAt(i, 3).toString();
-                apellido = tblcajero.getValueAt(i, 4).toString();
-                correo = tblcajero.getValueAt(i, 5).toString();
-                celular = tblcajero.getValueAt(i, 6).toString();
-                nivel_est = tblcajero.getValueAt(i, 7).toString();
-                turno = tblcajero.getValueAt(i, 8).toString();
-                edad = (int) tblcajero.getValueAt(i, 9);
-                fecha_nac = (Date) tblcajero.getValueAt(i, 10);
-                fec_contrat = (Date) tblcajero.getValueAt(i, 11);
+                nombre = tblcajero.getValueAt(i, 2).toString();
+                apellido = tblcajero.getValueAt(i, 3).toString();
+                correo = tblcajero.getValueAt(i, 4).toString();
+                celular = tblcajero.getValueAt(i, 5).toString();
+                nivel_est = tblcajero.getValueAt(i, 6).toString();
+                turno = tblcajero.getValueAt(i, 7).toString();
+                String auxedad = tblcajero.getValueAt(i, 8).toString();
+                edad = Integer.valueOf(auxedad);
+                String fecha_nacString = tblcajero.getValueAt(i, 9).toString();
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd MM yyyy");
+                try {
+                    fecha_nac = formatoFecha.parse(fecha_nacString);
+                } catch (ParseException e1) {
+                    System.out.println("Error");
+                }
+                
+                String fecha_nacString1 = tblcajero.getValueAt(i, 10).toString();
+                try {
+                    fec_contrat = formatoFecha.parse(fecha_nacString1);
+                } catch (ParseException e2) {
+                    System.out.println("Error");
+                }
             }
 
         });
@@ -288,11 +302,11 @@ public class Consulta_cajero extends javax.swing.JFrame {
     }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
-        if(!id.isBlank()){
-        dispose();
-        Modificar_cajero modi = new Modificar_cajero();
-        modi.recibirCodigo(id,cedula,nombre,apellido,correo,celular,nivel_est,turno,edad,fecha_nac,fec_contrat); // Envía el valor 
-        modi.setVisible(true);
+        if (!id.isBlank()) {
+            dispose();
+            Modificar_cajero modi = new Modificar_cajero();
+            modi.recibirCodigo(id, cedula, nombre, apellido, correo, celular, nivel_est, turno, edad, fecha_nac, fec_contrat); // Envía el valor 
+            modi.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Para modificar, primero selecciona un registro");
         }

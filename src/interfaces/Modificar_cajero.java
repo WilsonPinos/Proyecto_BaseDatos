@@ -118,6 +118,11 @@ public class Modificar_cajero extends javax.swing.JFrame {
         lblfechanacimiento.setText("Fecha de nacimiento:");
 
         btnregresar.setText("REGRESAR");
+        btnregresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregresarActionPerformed(evt);
+            }
+        });
 
         btnguardar.setText("GUARDAR");
 
@@ -239,6 +244,12 @@ public class Modificar_cajero extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
+        dispose();
+        Consulta_cajero consu = new Consulta_cajero();
+        consu.setVisible(true);
+    }//GEN-LAST:event_btnregresarActionPerformed
 
     /**
      * @param args the command line arguments
