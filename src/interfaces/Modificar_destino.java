@@ -5,6 +5,12 @@
  */
 package interfaces;
 
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import javax.swing.JOptionPane;
+import proyecto_basedatos.Destino;
+
 /**
  *
  * @author Wilson Pinos
@@ -17,6 +23,25 @@ public class Modificar_destino extends javax.swing.JFrame {
     public Modificar_destino() {
         initComponents();
     }
+    public void recibirCodigo(String codigo, String descripcion, String nombre_destino) {
+        txtid.setText(codigo);
+        txtid.setEnabled(false);
+        txtadescripcion.setText(descripcion);
+        txtnombre.setText(nombre_destino);
+    }
+    public void ModificarDestino(ObjectContainer base) {
+        Destino Bdestino = new Destino(txtid.getText(), null, null);
+        ObjectSet resultado = base.get(Bdestino);
+        
+        Destino Mdestino = (Destino) resultado.next();
+        Mdestino.setNombre_destino(txtnombre.getText());
+        Mdestino.setDescripcion(txtadescripcion.getText());
+        base.set(Mdestino);
+        txtnombre.setText("");
+        txtadescripcion.setText("");
+        JOptionPane.showMessageDialog(this, "Modificacion exitosa");
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,8 +75,18 @@ public class Modificar_destino extends javax.swing.JFrame {
         lblnombre.setText("Nombre:");
 
         btnregresar.setText("REGRESAR");
+        btnregresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregresarActionPerformed(evt);
+            }
+        });
 
         btnguardar.setText("GUARDAR");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         lbldescripcion.setText("Descripcion:");
 
@@ -125,6 +160,18 @@ public class Modificar_destino extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        ModificarDestino(base);
+        CerrarBD(base);
+    }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
+        dispose();
+        Consulta_destino cons = new Consulta_destino();
+        cons.setVisible(true);
+    }//GEN-LAST:event_btnregresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -189,6 +236,10 @@ public class Modificar_destino extends javax.swing.JFrame {
                 new Modificar_destino().setVisible(true);
             }
         });
+        
+    }
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

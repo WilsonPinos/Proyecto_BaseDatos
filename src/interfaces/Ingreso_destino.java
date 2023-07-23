@@ -5,6 +5,12 @@
  */
 package interfaces;
 
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import javax.swing.JOptionPane;
+import proyecto_basedatos.Destino;
+
 /**
  *
  * @author Wilson Pinos
@@ -16,6 +22,21 @@ public class Ingreso_destino extends javax.swing.JFrame {
      */
     public Ingreso_destino() {
         initComponents();
+    }
+
+    public void CrearEscuela(ObjectContainer base) {
+        Destino Cdestino = new Destino(txtid.getText(), txtadescripcion.getText(), txtnombre.getText());
+        Destino Bdestino = new Destino(txtid.getText(), null, null);
+        ObjectSet resultado = base.get(Bdestino);
+        if (resultado.isEmpty()) {
+            base.set(Cdestino);
+            txtid.setText("");
+            txtadescripcion.setText("");
+            txtnombre.setText("");
+            JOptionPane.showMessageDialog(this, "Registro exitoso");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ya existe un destino con este codigo");
+        }
     }
 
     /**
@@ -53,8 +74,18 @@ public class Ingreso_destino extends javax.swing.JFrame {
         btnsalir.setText("SALIR");
 
         btnguardar.setText("GUARDAR");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         btnbuscar.setText("BUSCAR");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         lbldescripcion.setText("Descripcion:");
 
@@ -130,6 +161,30 @@ public class Ingreso_destino extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        if (txtid.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingresa un ID");
+        } else {
+            if (txtadescripcion.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa un descripcion");
+            } else {
+                if (txtnombre.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(this, "Ingresa un nombre");
+                } else {
+                    ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                    CrearEscuela(base);
+                    CerrarBD(base);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        dispose();
+        Consulta_destino cons = new Consulta_destino();
+        cons.setVisible(true);
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -178,6 +233,10 @@ public class Ingreso_destino extends javax.swing.JFrame {
                 new Ingreso_destino().setVisible(true);
             }
         });
+    }
+
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

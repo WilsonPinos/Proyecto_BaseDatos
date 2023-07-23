@@ -5,6 +5,7 @@
  */
 package proyecto_basedatos;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 /**
@@ -16,12 +17,12 @@ public class Horario {
     
     
     private String id_turno;
-    private Date fecha_ingreso,fecha_salida;
+    private LocalTime fecha_ingreso,fecha_salida;
 
     public Horario() {
     }
 
-    public Horario(String id_turno, Date fecha_ingreso, Date fecha_salida) {
+    public Horario(String id_turno, LocalTime fecha_ingreso, LocalTime fecha_salida) {
         this.id_turno = id_turno;
         this.fecha_ingreso = fecha_ingreso;
         this.fecha_salida = fecha_salida;
@@ -35,27 +36,22 @@ public class Horario {
         this.id_turno = id_turno;
     }
 
-    public Date getFecha_ingreso() {
+    public LocalTime getFecha_ingreso() {
         return fecha_ingreso;
     }
 
-    public void setFecha_ingreso(Date fecha_ingreso) {
+    public void setFecha_ingreso(LocalTime fecha_ingreso) {
         this.fecha_ingreso = fecha_ingreso;
     }
 
-    public Date getFecha_salida() {
+    public LocalTime getFecha_salida() {
         return fecha_salida;
     }
 
-    public void setFecha_salida(Date fecha_salida) {
+    public void setFecha_salida(LocalTime fecha_salida) {
         this.fecha_salida = fecha_salida;
     }
 
-    @Override
-    public String toString() {
-        return "Horario{" + "id_turno=" + id_turno + ", fecha_ingreso=" + fecha_ingreso + ", fecha_salida=" + fecha_salida + '}';
-    }
-    
     
     
     

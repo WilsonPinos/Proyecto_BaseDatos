@@ -5,6 +5,15 @@
  */
 package interfaces;
 
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import proyecto_basedatos.Destino;
+
 /**
  *
  * @author Wilson Pinos
@@ -14,8 +23,47 @@ public class Consulta_destino extends javax.swing.JFrame {
     /**
      * Creates new form Consulta_bus
      */
+    private Modificar_destino modificar;
+    private String id_destino="";
+    private String descripcion="";
+    private String nombre_destino="";
+    
     public Consulta_destino() {
         initComponents();
+        
+        BuscarDestino();
+        tbldestinos.addMouseListener(new MouseAdapter() {
+            DefaultTableModel model = new DefaultTableModel();
+
+            public void mouseClicked(MouseEvent e) {
+                int i = tbldestinos.getSelectedRow();
+                id_destino = tbldestinos.getValueAt(i, 0).toString();
+                descripcion = tbldestinos.getValueAt(i, 1).toString();
+                nombre_destino = tbldestinos.getValueAt(i, 2).toString();
+            }
+
+        });
+    }
+    public void setModificar_destino(Modificar_destino modificar) {
+        this.modificar = modificar;
+    }
+    public void BuscarDestino() {
+
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Destino desti = new Destino(null, null, null);
+        ObjectSet resultado = base.get(desti);
+        String matriz[][] = new String[resultado.size()][3];
+        int i = 0;
+        while (resultado.hasNext()) {
+            Destino tablaescuela = (Destino) resultado.next();
+            matriz[i][0] = tablaescuela.getId_destino();
+            matriz[i][1] = tablaescuela.getDescripcion();
+            matriz[i][2] = tablaescuela.getNombre_destino();
+            i++;
+
+        }
+        tbldestinos.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID", "Descripcion", "Nombre"}));
+        CerrarBD(base);
     }
 
     /**
@@ -57,12 +105,32 @@ public class Consulta_destino extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbldestinos);
 
         btnbuscar.setText("BUSCAR");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         btnregresar.setText("REGRESAR");
+        btnregresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregresarActionPerformed(evt);
+            }
+        });
 
         btnborrar.setText("BORRAR");
+        btnborrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnborrarActionPerformed(evt);
+            }
+        });
 
         btnmodificar.setText("MODIFICAR");
+        btnmodificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmodificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,6 +189,59 @@ public class Consulta_destino extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
+        dispose();
+        Ingreso_destino ing = new Ingreso_destino();
+        ing.setVisible(true);
+    }//GEN-LAST:event_btnregresarActionPerformed
+
+    private void btnborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnborrarActionPerformed
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Destino Bdestino = new Destino(id_destino, null, null);
+        ObjectSet resultado = base.get(Bdestino);
+        while (resultado.hasNext()) {
+            Destino Bcaje = (Destino) resultado.next();
+            if (JOptionPane.showConfirmDialog(rootPane, "¿Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                if (id_destino.equals(Bcaje.getId_destino())) {
+                    base.delete(Bcaje);
+
+                }
+            }
+        }
+        CerrarBD(base);
+        BuscarDestino();
+    }//GEN-LAST:event_btnborrarActionPerformed
+
+    private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
+        if(!id_destino.isBlank()){
+        dispose();
+        Modificar_destino modi = new Modificar_destino();
+        modi.recibirCodigo(id_destino,descripcion,nombre_destino); 
+        modi.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Para modificar, primero selecciona un registro");
+        }
+    }//GEN-LAST:event_btnmodificarActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Destino desti = new Destino(null, null, null);
+        ObjectSet resultado = base.get(desti);
+        String matriz[][] = new String[resultado.size()][2];
+        int i = 0;
+        while (resultado.hasNext()) {
+            Destino tabladestino = (Destino) resultado.next();
+            if (tabladestino.getNombre_destino().toLowerCase().contains(txtbuscar.getText().toLowerCase())) {
+                matriz[i][0] = tabladestino.getId_destino();
+                matriz[i][1] = tabladestino.getDescripcion();
+                matriz[i][2] = tabladestino.getNombre_destino();
+                i++;
+            }
+        }
+        tbldestinos.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID", "Descripcion", "Nombre"}));
+        CerrarBD(base);
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -157,6 +278,9 @@ public class Consulta_destino extends javax.swing.JFrame {
                 new Consulta_destino().setVisible(true);
             }
         });
+    }
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
