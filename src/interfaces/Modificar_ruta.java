@@ -5,6 +5,11 @@
  */
 package interfaces;
 
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import javax.swing.JOptionPane;
+import proyecto_basedatos.Ruta;
+
 /**
  *
  * @author Wilson Pinos
@@ -16,6 +21,27 @@ public class Modificar_ruta extends javax.swing.JFrame {
      */
     public Modificar_ruta() {
         initComponents();
+    }
+
+    public void recibirCodigo(String codigo_ruta, String origen, double distancia) {
+        txtcodigo.setText(codigo_ruta);
+        txtorigen.setText(origen);
+        String auxdistancia = String.valueOf(distancia);
+        txtdistancia.setText(auxdistancia);
+
+    }
+
+    public void ModificarRuta(ObjectContainer base) {
+        Ruta ruta1 = new Ruta(txtcodigo.getText(), null, 0);
+        ObjectSet resultado = base.get(ruta1);
+
+        Ruta miruta = (Ruta) resultado.next();
+        miruta.setOrigen(txtorigen.getText());
+        String auxdistancia = txtdistancia.getText();
+        double distancia = Double.valueOf(auxdistancia);
+        miruta.setDistancia(distancia);
+
+        JOptionPane.showMessageDialog(this, "Modificacion exitosa");
     }
 
     /**
@@ -50,6 +76,11 @@ public class Modificar_ruta extends javax.swing.JFrame {
         lblorigen.setText("Origen:");
 
         btnregresar.setText("REGRESAR");
+        btnregresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregresarActionPerformed(evt);
+            }
+        });
 
         btnguardar.setText("GUARDAR");
 
@@ -136,6 +167,11 @@ public class Modificar_ruta extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
+        Consulta_ruta ruta = new Consulta_ruta();
+        ruta.setVisible(true);
+    }//GEN-LAST:event_btnregresarActionPerformed
 
     /**
      * @param args the command line arguments

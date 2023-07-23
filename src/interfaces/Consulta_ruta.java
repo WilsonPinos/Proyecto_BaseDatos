@@ -5,6 +5,15 @@
  */
 package interfaces;
 
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import proyecto_basedatos.Ruta;
+
 /**
  *
  * @author Wilson Pinos
@@ -14,8 +23,52 @@ public class Consulta_ruta extends javax.swing.JFrame {
     /**
      * Creates new form Consulta_bus
      */
+    private Modificar_ruta mod;
+    private String codigo = "";
+    private String origen = "";
+    private double distancia = 0;
+
     public Consulta_ruta() {
         initComponents();
+        BuscarRuta();
+        tblrutas.addMouseListener(new MouseAdapter() {
+            DefaultTableModel model = new DefaultTableModel();
+
+            public void mouseClicked(MouseEvent e) {
+                int i = tblrutas.getSelectedRow();
+                codigo = tblrutas.getValueAt(i, 0).toString();
+                origen = tblrutas.getValueAt(i, 1).toString();
+                distancia = (double) tblrutas.getValueAt(i, 2);
+
+            }
+        });
+    }
+
+    public void setModificar_rutas(Modificar_ruta modi) {
+        this.mod = modi;
+    }
+
+    public final void BuscarRuta() {
+
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Ruta caje = new Ruta(null, null, 0);
+        ObjectSet resultado = base.get(caje);
+        String matriz[][] = new String[resultado.size()][3];
+        int i = 0;
+        while (resultado.hasNext()) {
+            Ruta rutas = (Ruta) resultado.next();
+            matriz[i][0] = rutas.getCodigo_ruta();
+            matriz[i][1] = rutas.getOrigen();
+
+            double auxdistancia = rutas.getDistancia();
+            String di = Double.toString(auxdistancia);
+            matriz[i][2] = di;
+
+            i++;
+
+        }
+        tblrutas.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Codigo", "Origen", "Distancia"}));
+        CerrarBD(base);
     }
 
     /**
@@ -57,12 +110,32 @@ public class Consulta_ruta extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblrutas);
 
         btnbuscar.setText("BUSCAR");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         btnregresar.setText("REGRESAR");
+        btnregresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregresarActionPerformed(evt);
+            }
+        });
 
         btnborrar.setText("BORRAR");
+        btnborrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnborrarActionPerformed(evt);
+            }
+        });
 
         btnmodificar.setText("MODIFICAR");
+        btnmodificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmodificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,6 +194,63 @@ public class Consulta_ruta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
+        Ingreso_ruta ruta = new Ingreso_ruta();
+        ruta.setVisible(true);
+    }//GEN-LAST:event_btnregresarActionPerformed
+
+    private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
+
+        if (!codigo.isBlank()) {
+            dispose();
+            Modificar_ruta modi = new Modificar_ruta();
+            modi.recibirCodigo(codigo, origen, distancia); // Envía el valor 
+            modi.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Para modificar, primero selecciona un registro");
+        }
+    }//GEN-LAST:event_btnmodificarActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Ruta caje = new Ruta(null, null, 0);
+        ObjectSet resultado = base.get(caje);
+        String matriz[][] = new String[resultado.size()][3];
+        int i = 0;
+        while (resultado.hasNext()) {
+            Ruta rutas = (Ruta) resultado.next();
+            if (rutas.getCodigo_ruta().toLowerCase().contains(txtbuscar.getText().toLowerCase())) {
+                matriz[i][0] = rutas.getCodigo_ruta();
+                matriz[i][1] = rutas.getOrigen();
+
+                double auxdistancia = rutas.getDistancia();
+                String distancia = Double.toString(auxdistancia);
+                matriz[i][2] = distancia;
+
+                i++;
+            }
+        }
+        tblrutas.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Codigo", "Origen", "distncia"}));
+        CerrarBD(base);
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
+    private void btnborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnborrarActionPerformed
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Ruta Bcajero = new Ruta(codigo, null, 0);
+        ObjectSet resultado = base.get(Bcajero);
+        while (resultado.hasNext()) {
+            Ruta Bcaje = (Ruta) resultado.next();
+            if (JOptionPane.showConfirmDialog(rootPane, "¿Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                if (codigo.equals(Bcaje.getCodigo_ruta())) {
+                    base.delete(Bcaje);
+
+                }
+            }
+        }
+        CerrarBD(base);
+        BuscarRuta();
+    }//GEN-LAST:event_btnborrarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -155,6 +285,10 @@ public class Consulta_ruta extends javax.swing.JFrame {
                 new Consulta_ruta().setVisible(true);
             }
         });
+    }
+
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

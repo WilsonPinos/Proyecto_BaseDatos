@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package interfaces;
 
-/**
- *
- * @author Wilson Pinos
- */
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import proyecto_basedatos.Cliente;
+
 public class Ingreso_cliente extends javax.swing.JFrame {
 
     /**
@@ -16,6 +14,12 @@ public class Ingreso_cliente extends javax.swing.JFrame {
      */
     public Ingreso_cliente() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        // desahaabilitar fechas anteriores
+        //dcfechafin.setMinSelectableDate(new Date());
+        //desahabilitar fechas posteriores
+        //dcfechafin.setMaxSelectableDate(new Date());
+
     }
 
     /**
@@ -74,8 +78,18 @@ public class Ingreso_cliente extends javax.swing.JFrame {
         btnsalir.setText("SALIR");
 
         btnguardar.setText("GUARDAR");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         btnbuscar.setText("BUSCAR");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -172,6 +186,48 @@ public class Ingreso_cliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        if (txtidcliente.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingresa el codigo del cliente");
+        } else {
+            if (txtcedula.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa la cedula del cliente");
+            } else if (txtnombre.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el nombre del cliente");
+            } else if (txtapellido.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el apellido del cliente");
+            } else if (txtedad.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa la edad  del cliente");
+            } else if (txtcorreo.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el correo del cliente");
+            } else if (txtcelular.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el celular del cliente");
+            } else if (dcfechafin.getDate()) {
+                JOptionPane.showMessageDialog(this, "Ingresa la fecha de nacimiento del cliente");
+            } else {
+                ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                CrearAgencia(base);
+                CerrarBD(base);
+            }
+        }
+    }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        Consulta_cliente con = new Consulta_cliente();
+        con.setVisible(true);
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
+    private void txtcodigoKeyTyped(java.awt.event.KeyEvent evt) {
+        char letra = evt.getKeyChar();
+        if (!Character.isDigit(letra)) {
+            evt.consume();
+        }
+
+        if (txtidcliente.getText().length() > 14) {
+            evt.consume();
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -208,6 +264,32 @@ public class Ingreso_cliente extends javax.swing.JFrame {
                 new Ingreso_cliente().setVisible(true);
             }
         });
+    }
+
+    public void CrearAgencia(ObjectContainer base) {
+//String Id_cliente, String cedula_cli, String nombre_cli, String apellido_cli, String telefono_cli, String correo_cli, int edad_cli, Date fecha_nacimiento) {
+
+        Cliente cliente1 = new Cliente(txtidcliente.getText(), txtcedula.getText(), txtnombre.getText(), txtapellido.getText(), txtcelular.getText(), txtcorreo.getText(), txtedad.getText(), dcfechafin);
+        Cliente cli = new Cliente(txtidcliente.getText(), null, null, null, null, null, 0, null);
+        ObjectSet resultado = base.get(cli);
+        if (resultado.isEmpty()) {
+            base.set(cliente1);
+            txtidcliente.setText("");
+            txtcedula.setText("");
+            txtnombre.setText("");
+            txtapellido.setText("");
+            txtcelular.setText("");
+            txtcorreo.setText(" ");
+            txtedad.setText(" ");
+            //dcfechafin.set
+            JOptionPane.showMessageDialog(this, "Registro exitoso");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ya existe un cliente con este codigo");
+        }
+    }
+
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

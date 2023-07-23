@@ -50,6 +50,7 @@ public class Crud_coductor extends javax.swing.JFrame {
         btnguardar = new javax.swing.JButton();
         btnconsulta = new javax.swing.JButton();
         btnSalir2 = new javax.swing.JButton();
+        dcfechafin = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,6 +128,7 @@ public class Crud_coductor extends javax.swing.JFrame {
         btnSalir2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnSalir2.setText("SALIR");
         jPanel1.add(btnSalir2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, 140, -1));
+        jPanel1.add(dcfechafin, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,6 +192,7 @@ public class Crud_coductor extends javax.swing.JFrame {
     private javax.swing.JButton btnconsulta;
     private javax.swing.JButton btnguardar;
     private javax.swing.JComboBox<String> cbxlicencia;
+    private com.toedter.calendar.JDateChooser dcfechafin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
