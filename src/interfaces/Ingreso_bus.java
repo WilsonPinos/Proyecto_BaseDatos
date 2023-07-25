@@ -9,12 +9,14 @@ import com.db4o.*;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import proyecto_basedatos.Agencia;
 import proyecto_basedatos.Bus;
 import proyecto_basedatos.Horario;
 import proyecto_basedatos.Registro_contrato;
 import proyecto_basedatos.Ruta;
+import proyecto_basedatos.Turno_asignado;
 
 /**
  *
@@ -42,6 +44,14 @@ public class Ingreso_bus extends javax.swing.JFrame {
         while (result1.hasNext()){
             Ruta rut= (Ruta) result1.next();
             cbruta.addItem(rut.getOrigen());
+        }
+        
+         Horario Bhorario = new Horario(null, null, null);
+        ObjectSet result2= base.get(Bhorario);
+        
+        while (result2.hasNext()){
+            Horario hor= (Horario) result2.next();
+            cbhorario.addItem(hor.getId_turno());
         }
         
         CerrarBD(base);
@@ -76,12 +86,10 @@ public class Ingreso_bus extends javax.swing.JFrame {
         btnsalir = new javax.swing.JButton();
         btnguardar = new javax.swing.JButton();
         btnbuscar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txthorasalida = new javax.swing.JTextField();
-        txthoraingreso = new javax.swing.JTextField();
         txtnumbus = new javax.swing.JTextField();
         txtcapacidad = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        cbhorario = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -129,9 +137,9 @@ public class Ingreso_bus extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Hora ingreso:");
+        jLabel3.setText("Horaio:");
 
-        jLabel2.setText("Hora salida:");
+        cbhorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -156,18 +164,16 @@ public class Ingreso_bus extends javax.swing.JFrame {
                             .addComponent(lblnumerobus)
                             .addComponent(lblmatricula)
                             .addComponent(lblruta)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtmatricula)
                             .addComponent(cbcolor, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbagencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbruta, 0, 136, Short.MAX_VALUE)
-                            .addComponent(txthorasalida)
-                            .addComponent(txthoraingreso)
                             .addComponent(txtnumbus)
-                            .addComponent(txtcapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtcapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbhorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(91, 91, 91)
                         .addComponent(lblopcional)
@@ -211,13 +217,9 @@ public class Ingreso_bus extends javax.swing.JFrame {
                     .addComponent(cbruta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txthorasalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txthoraingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel3)
+                    .addComponent(cbhorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(59, 59, 59)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblfechaobtencion)
                     .addComponent(dcfechaobtencion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -227,7 +229,7 @@ public class Ingreso_bus extends javax.swing.JFrame {
                         .addComponent(lblfechafin)
                         .addComponent(lblopcional))
                     .addComponent(dcfechafin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnsalir)
                     .addComponent(btnguardar)
@@ -268,22 +270,18 @@ public class Ingreso_bus extends javax.swing.JFrame {
                             if (cbruta.getSelectedItem().toString().isEmpty()) {
                                 JOptionPane.showMessageDialog(this, "Selecciona una ruta");
                             } else {
-                                if (txthorasalida.getText().isBlank()) {
-                                    JOptionPane.showMessageDialog(this, "Ingresa la hora de salida");
+                                if (cbhorario.getSelectedItem().toString().isBlank()) {
+                                    JOptionPane.showMessageDialog(this, "Ingresa el horario");
                                 } else {
-                                    if (txthoraingreso.getText().toString().isBlank()) {
-                                        JOptionPane.showMessageDialog(this, "Ingresa la hora de ingreso");
+                                    if (dcfechaobtencion.getDate().toString().isBlank()) {
+                                        JOptionPane.showMessageDialog(this, "Ingresa la fecha de obtencion");
                                     } else {
-                                        if (dcfechaobtencion.getDate().toString().isBlank()) {
-                                            JOptionPane.showMessageDialog(this, "Ingresa la fecha de obtencion");
+                                        if (dcfechafin.getDate().toString().isBlank()) {
+                                            JOptionPane.showMessageDialog(this, "Ingresa la fecha de fin de la obtencion");
                                         } else {
-                                            if (dcfechafin.getDate().toString().isBlank()) {
-                                                JOptionPane.showMessageDialog(this, "Ingresa la fecha de fin de la obtencion");
-                                            } else {                                                
-                                                    ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
-                                                    CrearBus(base);
-                                                    CerrarBD(base);
-                                            }
+                                            ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                                            CrearBus(base);
+                                            CerrarBD(base);
                                         }
                                     }
                                 }
@@ -297,6 +295,9 @@ public class Ingreso_bus extends javax.swing.JFrame {
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
         
+        Consulta_bus cons = new Consulta_bus();
+        cons.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btnbuscarActionPerformed
 
     /**
@@ -357,17 +358,17 @@ public class Ingreso_bus extends javax.swing.JFrame {
         Registro_contrato Creg = new Registro_contrato(idcontrato, txtmatricula.getText(), idagencia, dcfechaobtencion.getDate(), dcfechafin.getDate());
         Registro_contrato Breg = new Registro_contrato(idcontrato, null, null, null, null);
         ObjectSet resultado1 = base.get(Breg);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalTime horaing = LocalTime.parse(txthoraingreso.getText(), formatter);
-        LocalTime horasal = LocalTime.parse(txthorasalida.getText(), formatter);
-        Horario Chorario = new Horario(idhorario, horaing, horasal);
-        Horario Bhorario = new Horario(idhorario, null, null);
-        ObjectSet resultado3 = base.get(Bhorario);
+        
+        Date fecha_aginacion = new Date();
+        Turno_asignado Cturno = new Turno_asignado(idcontrato, cbhorario.getSelectedItem().toString(), txtmatricula.getText(), fecha_aginacion);
+        Turno_asignado Bturno = new Turno_asignado(idcontrato, null, null, null);
+        ObjectSet resultado3 = base.get(Bturno);
+        
+        
 
         if (resultado.isEmpty()) {
             if (resultado1.isEmpty() && resultado3.isEmpty()) {
-                base.set(Chorario);
+                base.set(Cturno);
                 base.set(Creg);
                 base.set(Cbus);
             } else {
@@ -380,8 +381,7 @@ public class Ingreso_bus extends javax.swing.JFrame {
             txtcapacidad.setText("");
             cbagencia.setSelectedIndex(0);
             cbruta.setSelectedIndex(0);
-            txthorasalida.setText("");
-            txthoraingreso.setText("");
+            cbhorario.setSelectedIndex(0);
             dcfechaobtencion.setDate(null);
             dcfechafin.setDate(null);
             JOptionPane.showMessageDialog(this, "Registro exitoso");
@@ -389,25 +389,7 @@ public class Ingreso_bus extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ya existe un cajero con este ID");
         }
     }
-
-    public void CrearRegistro(ObjectContainer base, String idcontrato) {
-        Agencia Bagencia = new Agencia(null, cbagencia.getSelectedItem().toString(), null, null, null);
-        ObjectSet resultado2 = base.get(Bagencia);
-        Agencia agencia = (Agencia) resultado2.next();
-        String idagencia = agencia.getId_agencia();
-        Registro_contrato Creg = new Registro_contrato(idcontrato, txtmatricula.getText(), idagencia, dcfechaobtencion.getDate(), dcfechafin.getDate());
-        Registro_contrato Breg = new Registro_contrato(idcontrato, null, null, null, null);
-        ObjectSet resultado1 = base.get(Breg);
-    }
-
-    public void CrearHorario(ObjectContainer base, String idhorario) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalTime horaing = LocalTime.parse(txthoraingreso.getText(), formatter);
-        LocalTime horasal = LocalTime.parse(txthorasalida.getText(), formatter);
-        Horario Chorario = new Horario(idhorario, horaing, horasal);
-        Horario Bhorario = new Horario(idhorario, null, null);
-        ObjectSet resultado3 = base.get(Bhorario);
-    }
+    
     public static void CerrarBD(ObjectContainer base) {
         base.close();
     }
@@ -418,11 +400,11 @@ public class Ingreso_bus extends javax.swing.JFrame {
     private javax.swing.JButton btnsalir;
     private javax.swing.JComboBox<String> cbagencia;
     private javax.swing.JComboBox<String> cbcolor;
+    private javax.swing.JComboBox<String> cbhorario;
     private javax.swing.JComboBox<String> cbruta;
     private com.toedter.calendar.JDateChooser dcfechafin;
     private com.toedter.calendar.JDateChooser dcfechaobtencion;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblagencia;
     private javax.swing.JLabel lblcapacidad;
@@ -435,8 +417,6 @@ public class Ingreso_bus extends javax.swing.JFrame {
     private javax.swing.JLabel lblruta;
     private javax.swing.JLabel lbltitulo;
     private javax.swing.JTextField txtcapacidad;
-    private javax.swing.JTextField txthoraingreso;
-    private javax.swing.JTextField txthorasalida;
     private javax.swing.JTextField txtmatricula;
     private javax.swing.JTextField txtnumbus;
     // End of variables declaration//GEN-END:variables

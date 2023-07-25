@@ -8,6 +8,7 @@ package interfaces;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import proyecto_basedatos.Destino;
 
@@ -23,25 +24,25 @@ public class Modificar_destino extends javax.swing.JFrame {
     public Modificar_destino() {
         initComponents();
     }
-    public void recibirCodigo(String codigo, String descripcion, String nombre_destino) {
-        txtid.setText(codigo);
+    public void recibirCodigo(String id_destino, String descripcion, String nombre_destino) {
+        txtid.setText(id_destino);
         txtid.setEnabled(false);
         txtadescripcion.setText(descripcion);
         txtnombre.setText(nombre_destino);
+
     }
     public void ModificarDestino(ObjectContainer base) {
         Destino Bdestino = new Destino(txtid.getText(), null, null);
         ObjectSet resultado = base.get(Bdestino);
-        
         Destino Mdestino = (Destino) resultado.next();
-        Mdestino.setNombre_destino(txtnombre.getText());
-        Mdestino.setDescripcion(txtadescripcion.getText());
-        base.set(Mdestino);
-        txtnombre.setText("");
-        txtadescripcion.setText("");
-        JOptionPane.showMessageDialog(this, "Modificacion exitosa");
+            Mdestino.setDescripcion(txtadescripcion.getText());
+            Mdestino.setNombre_destino(txtnombre.getText());
+            base.set(Mdestino);
+            txtadescripcion.setText("");
+            txtnombre.setText("");
+            
+            JOptionPane.showMessageDialog(this, "Modificacion exitosa");
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,7 +58,7 @@ public class Modificar_destino extends javax.swing.JFrame {
         lbliddestino = new javax.swing.JLabel();
         lblnombre = new javax.swing.JLabel();
         txtid = new javax.swing.JTextField();
-        btnregresar = new javax.swing.JButton();
+        btnsalir = new javax.swing.JButton();
         btnguardar = new javax.swing.JButton();
         txtnombre = new javax.swing.JTextField();
         lbldescripcion = new javax.swing.JLabel();
@@ -74,10 +75,10 @@ public class Modificar_destino extends javax.swing.JFrame {
 
         lblnombre.setText("Nombre:");
 
-        btnregresar.setText("REGRESAR");
-        btnregresar.addActionListener(new java.awt.event.ActionListener() {
+        btnsalir.setText("SALIR");
+        btnsalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnregresarActionPerformed(evt);
+                btnsalirActionPerformed(evt);
             }
         });
 
@@ -101,28 +102,28 @@ public class Modificar_destino extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbltitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(btnregresar)
-                            .addGap(50, 50, 50)
-                            .addComponent(btnguardar))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGap(104, 104, 104)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lbliddestino)
-                                .addComponent(lbldescripcion)
-                                .addComponent(lblnombre))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(29, 29, 29)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtid, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbliddestino)
+                            .addComponent(lbldescripcion)
+                            .addComponent(lblnombre))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtid, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnsalir)
+                .addGap(99, 99, 99)
+                .addComponent(btnguardar)
+                .addGap(122, 122, 122))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,10 +141,11 @@ public class Modificar_destino extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbldescripcion)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnguardar)
-                    .addComponent(btnregresar)))
+                    .addComponent(btnsalir))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -161,16 +163,28 @@ public class Modificar_destino extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
-        ModificarDestino(base);
-        CerrarBD(base);
+        if (txtid.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingresa un ID");
+        } else {
+            if (txtadescripcion.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa una descripcion");
+            } else {
+                if (txtnombre.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(this, "Ingresa un nombre");
+                } else {
+                    ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                    ModificarDestino(base);
+                    CerrarBD(base);
+                }
+            }
+        }
     }//GEN-LAST:event_btnguardarActionPerformed
 
-    private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
-        dispose();
+    private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
         Consulta_destino cons = new Consulta_destino();
+        setVisible(false);
         cons.setVisible(true);
-    }//GEN-LAST:event_btnregresarActionPerformed
+    }//GEN-LAST:event_btnsalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,15 +250,15 @@ public class Modificar_destino extends javax.swing.JFrame {
                 new Modificar_destino().setVisible(true);
             }
         });
-        
     }
+
     public static void CerrarBD(ObjectContainer base) {
         base.close();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnguardar;
-    private javax.swing.JButton btnregresar;
+    private javax.swing.JButton btnsalir;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbldescripcion;

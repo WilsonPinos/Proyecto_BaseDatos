@@ -1,0 +1,374 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package interfaces;
+
+import com.db4o.*;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import proyecto_basedatos.Boleto;
+import proyecto_basedatos.Bus;
+import proyecto_basedatos.Cajero;
+import proyecto_basedatos.Cliente;
+import proyecto_basedatos.Destino;
+import proyecto_basedatos.Detalle_venta;
+import proyecto_basedatos.detalle_boleto;
+
+/**
+ *
+ * @author Wilson Pinos
+ */
+public class Ingreso_Boleto extends javax.swing.JFrame {
+
+    /**
+     * Creates new form Ingreso_Boleto
+     */
+    public Ingreso_Boleto() {
+        initComponents();
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                    
+                    
+        Bus Bbus = new Bus(0, 0, null, null);
+        ObjectSet result = base.get(Bbus);
+
+        while (result.hasNext()) {
+            Bus hor = (Bus) result.next();
+            cbmatriculabus.addItem(hor.getMatricula());
+        }
+        
+        Destino Bdestino = new Destino(null, null, null);
+        ObjectSet result2 = base.get(Bdestino);
+
+        while (result2.hasNext()) {
+            Destino desti = (Destino) result2.next();
+            cbdestino.addItem(desti.getId_destino());
+        }
+        
+        Cajero Bcajero = new Cajero(null, null, null, null, null, null, null, null, 0, null, null);
+        ObjectSet result3 = base.get(Bcajero);
+
+        while (result3.hasNext()) {
+            Cajero caje = (Cajero) result3.next();
+            cbcajero.addItem(caje.getId_cajero());
+        }
+        
+        Cliente Bcliente = new Cliente(null, null, null, null, null, null, 0, null);
+        ObjectSet result4 = base.get(Bcliente);
+
+        while (result4.hasNext()) {
+            Cliente cli = (Cliente) result4.next();
+            cbcliente.addItem(cli.getId_cliente());
+        }
+        
+        
+        CerrarBD(base);
+
+    }
+
+    public void CrearBoleto(ObjectContainer base) {
+        
+        
+        
+        String auxnum_asiento = txtnumasiento.getText();
+        int num_asiento = Integer.valueOf(auxnum_asiento);
+        String auxprecio = txtprecio.getText();
+        double precio = Double.valueOf(auxprecio);
+        Boleto Cboleto = new Boleto(precio, num_asiento, txtid.getText(), cbmatriculabus.getSelectedItem().toString(), cbcajero.getSelectedItem().toString(), cbdestino.getSelectedItem().toString());
+        Boleto Bboleto = new Boleto(0, 0, txtid.getText(), null, null, null);
+        Boleto idboleto = new Boleto(0,0, null, null, null, null);
+        ObjectSet resultado = base.get(Bboleto);
+        ObjectSet idresultado = base.get(idboleto);
+        
+        Date fec_compra = new Date();
+        int autonumerable = idresultado.size()+1;
+        String autonumerableSTR = String.valueOf(autonumerable);
+        detalle_boleto Cdetboleto = new detalle_boleto(cbcliente.getSelectedItem().toString(), txtid.getText(), autonumerableSTR, fec_compra, (int) spncantidad.getValue());
+        Detalle_venta Cventa = new Detalle_venta(autonumerableSTR, cbcajero.getSelectedItem().toString(), txtid.getText(), autonumerable, fec_compra);
+        
+        
+        
+        if (resultado.isEmpty()) {
+            base.set(Cboleto);
+            base.set(Cdetboleto);
+            base.set(Cventa);
+            txtid.setText("");
+            txtnumasiento.setText("");
+            txtprecio.setText("");
+            cbcajero.setSelectedIndex(0);
+            cbdestino.setSelectedIndex(0);
+            cbmatriculabus.setSelectedIndex(0);
+            JOptionPane.showMessageDialog(this, "Registro exitoso");
+            System.out.println("****************************BOLETO*****************************");
+            System.out.println("ID boleto: "+Cboleto.getId_boleto());
+            System.out.println("ID cajero venedor: "+Cboleto.getId_cajero());
+            System.out.println("ID del destino"+Cboleto.getId_destino());
+            System.out.println("Matricula de bus: "+Cboleto.getMatricula_bus());
+            System.out.println("Numero de asiento: "+Cboleto.getNum_asiento());
+            System.out.println("Precio del boleto: "+Cboleto.getPrecio());
+            System.out.println("Cantidad de boletos: "+Cdetboleto.getCantidad());
+            System.out.println("Fecha de compra: "+Cdetboleto.getFec_compra());
+            System.out.println("Fecha de venta: "+Cventa.getFecha_de_venta());
+            System.out.println("Numero de venta: "+Cventa.getNum_venta());
+            System.out.println("***************************************************************");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ya existe un boleto con este id");
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        lbltitulo = new javax.swing.JLabel();
+        lblid = new javax.swing.JLabel();
+        lblrecio = new javax.swing.JLabel();
+        lbllnumeroasiento = new javax.swing.JLabel();
+        lblbus = new javax.swing.JLabel();
+        lbldestino = new javax.swing.JLabel();
+        txtid = new javax.swing.JTextField();
+        txtprecio = new javax.swing.JTextField();
+        txtnumasiento = new javax.swing.JTextField();
+        cbmatriculabus = new javax.swing.JComboBox<>();
+        cbdestino = new javax.swing.JComboBox<>();
+        btnsalir = new javax.swing.JButton();
+        btngenerar = new javax.swing.JButton();
+        lblcajerovendeddor = new javax.swing.JLabel();
+        cbcajero = new javax.swing.JComboBox<>();
+        cbcliente = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        spncantidad = new javax.swing.JSpinner();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lbltitulo.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
+        lbltitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbltitulo.setText("GENERAR BOLETO");
+
+        lblid.setText("ID:");
+
+        lblrecio.setText("Precio:");
+
+        lbllnumeroasiento.setText("Numero de asiento:");
+
+        lblbus.setText("Bus:");
+
+        lbldestino.setText("Destino:");
+
+        cbmatriculabus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+
+        cbdestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+
+        btnsalir.setText("SALIR");
+
+        btngenerar.setText("GENERAR");
+        btngenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngenerarActionPerformed(evt);
+            }
+        });
+
+        lblcajerovendeddor.setText("Cajero vendedor:");
+
+        cbcajero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+
+        cbcliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+
+        jLabel1.setText("ID cliente:");
+
+        jLabel2.setText("Cantidad:");
+
+        spncantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbltitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbldestino)
+                            .addComponent(lblbus)
+                            .addComponent(lbllnumeroasiento)
+                            .addComponent(lblrecio)
+                            .addComponent(lblid)
+                            .addComponent(lblcajerovendeddor)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbcliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtprecio, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                            .addComponent(txtnumasiento, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                            .addComponent(cbmatriculabus, 0, 190, Short.MAX_VALUE)
+                            .addComponent(cbdestino, 0, 190, Short.MAX_VALUE)
+                            .addComponent(txtid, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                            .addComponent(cbcajero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(spncantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(btnsalir)
+                        .addGap(108, 108, 108)
+                        .addComponent(btngenerar)))
+                .addContainerGap(178, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(lbltitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblid)
+                    .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblrecio)
+                    .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbllnumeroasiento)
+                    .addComponent(txtnumasiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblbus)
+                    .addComponent(cbmatriculabus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbldestino)
+                    .addComponent(cbdestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblcajerovendeddor)
+                    .addComponent(cbcajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(spncantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnsalir)
+                    .addComponent(btngenerar))
+                .addGap(20, 20, 20))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btngenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngenerarActionPerformed
+        if (txtid.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingresa un ID");
+        } else {
+            if (txtnumasiento.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa un numero de asiento");
+            } else {
+                if (txtprecio.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(this, "Ingresa un precio");
+                } else {
+                    if (cbcajero.getSelectedIndex() == 0) {
+                        JOptionPane.showMessageDialog(this, "Selecciona un cajero");
+                    } else {
+                        if (cbdestino.getSelectedIndex() == 0) {
+                            JOptionPane.showMessageDialog(this, "Selecciona un destino");
+                        } else {
+                            if (cbmatriculabus.getSelectedIndex() == 0) {
+                                JOptionPane.showMessageDialog(this, "Selecciona un bus");
+                            } else {
+                                ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                                CrearBoleto(base);
+                                CerrarBD(base);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_btngenerarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Ingreso_Boleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Ingreso_Boleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Ingreso_Boleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Ingreso_Boleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Ingreso_Boleto().setVisible(true);
+            }
+        });
+    }
+
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btngenerar;
+    private javax.swing.JButton btnsalir;
+    private javax.swing.JComboBox<String> cbcajero;
+    private javax.swing.JComboBox<String> cbcliente;
+    private javax.swing.JComboBox<String> cbdestino;
+    private javax.swing.JComboBox<String> cbmatriculabus;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblbus;
+    private javax.swing.JLabel lblcajerovendeddor;
+    private javax.swing.JLabel lbldestino;
+    private javax.swing.JLabel lblid;
+    private javax.swing.JLabel lbllnumeroasiento;
+    private javax.swing.JLabel lblrecio;
+    private javax.swing.JLabel lbltitulo;
+    private javax.swing.JSpinner spncantidad;
+    private javax.swing.JTextField txtid;
+    private javax.swing.JTextField txtnumasiento;
+    private javax.swing.JTextField txtprecio;
+    // End of variables declaration//GEN-END:variables
+}

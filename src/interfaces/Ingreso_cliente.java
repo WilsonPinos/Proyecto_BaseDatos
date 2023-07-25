@@ -76,6 +76,11 @@ public class Ingreso_cliente extends javax.swing.JFrame {
         lblfechanac.setText("Fecha de nacimiento:");
 
         btnsalir.setText("SALIR");
+        btnsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsalirActionPerformed(evt);
+            }
+        });
 
         btnguardar.setText("GUARDAR");
         btnguardar.addActionListener(new java.awt.event.ActionListener() {
@@ -222,11 +227,18 @@ public class Ingreso_cliente extends javax.swing.JFrame {
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
         Consulta_cliente con = new Consulta_cliente();
         con.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void txtcedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcedulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcedulaActionPerformed
+
+    private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
+        Menu_principal ing = new Menu_principal();
+        ing.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnsalirActionPerformed
 
     private void txtcodigoKeyTyped(java.awt.event.KeyEvent evt) {
         char letra = evt.getKeyChar();

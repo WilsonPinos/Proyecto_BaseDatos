@@ -107,6 +107,11 @@ public class Ingreso_cajero extends javax.swing.JFrame {
         lblfechanacimiento.setText("Fecha de nacimiento:");
 
         btnsalir.setText("SALIR");
+        btnsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsalirActionPerformed(evt);
+            }
+        });
 
         btnguardar.setText("GUARDAR");
         btnguardar.addActionListener(new java.awt.event.ActionListener() {
@@ -299,6 +304,12 @@ public class Ingreso_cajero extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
+        Menu_principal ing = new Menu_principal();
+        ing.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnsalirActionPerformed
 
     /**
      * @param args the command line arguments

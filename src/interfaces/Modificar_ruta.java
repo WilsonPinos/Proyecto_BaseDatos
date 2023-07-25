@@ -5,6 +5,7 @@
  */
 package interfaces;
 
+import com.db4o.*;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import javax.swing.JOptionPane;
@@ -40,7 +41,7 @@ public class Modificar_ruta extends javax.swing.JFrame {
         String auxdistancia = txtdistancia.getText();
         double distancia = Double.valueOf(auxdistancia);
         miruta.setDistancia(distancia);
-
+        base.set(miruta);
         JOptionPane.showMessageDialog(this, "Modificacion exitosa");
     }
 
@@ -83,6 +84,11 @@ public class Modificar_ruta extends javax.swing.JFrame {
         });
 
         btnguardar.setText("GUARDAR");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         lbldistancia.setText("Distancia:");
 
@@ -171,7 +177,26 @@ public class Modificar_ruta extends javax.swing.JFrame {
     private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
         Consulta_ruta ruta = new Consulta_ruta();
         ruta.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnregresarActionPerformed
+
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        if (txtcodigo.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingresa un codigo");
+        } else {
+            if (txtorigen.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa un origrn");
+            } else {
+                if (txtdistancia.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(this, "Ingresa una distancia");
+                } else {
+                    ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                    ModificarRuta(base);
+                    CerrarBD(base);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnguardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,6 +234,9 @@ public class Modificar_ruta extends javax.swing.JFrame {
                 new Modificar_ruta().setVisible(true);
             }
         });
+    }
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

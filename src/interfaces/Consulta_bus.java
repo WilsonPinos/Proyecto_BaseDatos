@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyecto_basedatos.Agencia;
 import proyecto_basedatos.Bus;
@@ -37,57 +38,52 @@ public class Consulta_bus extends javax.swing.JFrame {
     private int num_bus;
     private String agencia = "";
     private String ruta = "";
-    private LocalTime hora_salida = null;
-    private LocalTime hora_regreso = null;
+    private String horario = "";
     private Date fecha_obtencion = null;
     private Date fecha_fin = null;
+    private int id;
 
     public Consulta_bus() {
         initComponents();
-
+        
         BuscarBus();
+        
         tblbus.addMouseListener(new MouseAdapter() {
             DefaultTableModel model = new DefaultTableModel();
 
-            
-public void mouseClicked(MouseEvent e) {
-    int i = tblbus.getSelectedRow();
-    matricula = tblbus.getValueAt(i, 0).toString();
-    color_bus = tblbus.getValueAt(i, 1).toString();
-    String auxcantidad = tblbus.getValueAt(i, 3).toString();
-    cantidad_pas = Integer.valueOf(auxcantidad);
-    String auxnumbus = tblbus.getValueAt(i, 2).toString();
-    num_bus = Integer.valueOf(auxnumbus);
-    agencia = tblbus.getValueAt(i, 4).toString();
-    ruta = tblbus.getValueAt(i, 5).toString();
+            public void mouseClicked(MouseEvent e) {
+                
+                
+                int i = tblbus.getSelectedRow();
+                matricula = tblbus.getValueAt(i, 0).toString();
+                color_bus = tblbus.getValueAt(i, 1).toString();
+                String auxcantidad = tblbus.getValueAt(i, 3).toString();
+                cantidad_pas = Integer.valueOf(auxcantidad);
+                String auxnumbus = tblbus.getValueAt(i, 2).toString();
+                num_bus = Integer.valueOf(auxnumbus);
+                agencia = tblbus.getValueAt(i, 4).toString();
+                ruta = tblbus.getValueAt(i, 5).toString();
 
-    // Obtener hora de salida
-    String auxhorasalida = tblbus.getValueAt(i, 6).toString();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-    hora_salida = LocalTime.parse(auxhorasalida, formatter);
+                horario = tblbus.getValueAt(i, 9).toString();
 
-    // Obtener hora de regreso
-    String auxhoraingreso = tblbus.getValueAt(i, 7).toString();
-    hora_regreso = LocalTime.parse(auxhoraingreso, formatter);
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+                // Obtener fecha de obtencion
+                String auxfecha_obt = tblbus.getValueAt(i, 7).toString();
+                try {
+                    fecha_obtencion = formatoFecha.parse(auxfecha_obt);
+                } catch (ParseException e11) {
+                    System.out.println("Error al convertir el String a Date: ");
+                }
 
-    // Obtener fecha de obtencion
-    String auxfecha_obt = tblbus.getValueAt(i, 8).toString();
-    try {
-        fecha_obtencion = formatoFecha.parse(auxfecha_obt);
-    } catch (ParseException e11) {
-        System.out.println("Error al convertir el String a Date: ");
-    }
-
-    // Obtener fecha de fin
-    String auxfecha_fin = tblbus.getValueAt(i, 9).toString();
-    try {
-        fecha_fin = formatoFecha.parse(auxfecha_fin);
-    } catch (ParseException e22) {
-        System.out.println("Error al convertir el String a Date: ");
-    }
-}
+                // Obtener fecha de fin
+                String auxfecha_fin = tblbus.getValueAt(i, 8).toString();
+                try {
+                    fecha_fin = formatoFecha.parse(auxfecha_fin);
+                } catch (ParseException e22) {
+                    System.out.println("Error al convertir el String a Date: ");
+                }
+            }
 
         });
 
@@ -102,22 +98,20 @@ public void mouseClicked(MouseEvent e) {
         ObjectSet resultado1 = base.get(Breg);
         Horario Bhorario = new Horario(null, null, null);
         ObjectSet resultado2 = base.get(Bhorario);
-        Agencia Bagencia = new Agencia (null,null,null,null,null);
+        Agencia Bagencia = new Agencia(null, null, null, null, null);
         ObjectSet resultado3 = base.get(Bagencia);
         Ruta Bruta = new Ruta(null, null, 0);
         ObjectSet resultado4 = base.get(Bruta);
-        
+
         String matriz[][] = new String[resultado.size()][12];
-        
 
         int i = 0;
         Agencia tablabus3 = (Agencia) resultado3.next();
-            Ruta tablabus4 = (Ruta) resultado4.next();
+        Ruta tablabus4 = (Ruta) resultado4.next();
         while (resultado.hasNext()) {
             Bus tablabus = (Bus) resultado.next();
             Registro_contrato tablabus1 = (Registro_contrato) resultado1.next();
             Horario tablabus2 = (Horario) resultado2.next();
-            
 
             matriz[i][0] = tablabus.getMatricula();
             matriz[i][1] = tablabus.getColor_bus();
@@ -125,12 +119,10 @@ public void mouseClicked(MouseEvent e) {
             matriz[i][2] = String.valueOf(axnumbus);
             int auxcantidad = tablabus.getCantidad_pas();
             matriz[i][3] = String.valueOf(auxcantidad);
-            
-            
+
             matriz[i][4] = tablabus3.getNombre_agencia();
             matriz[i][5] = tablabus4.getOrigen();
-            
-            
+
             matriz[i][6] = tablabus1.getId_contrato();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Date auxfecha_cont = tablabus1.getFecha_contrato();
@@ -148,7 +140,7 @@ public void mouseClicked(MouseEvent e) {
             i++;
 
         }
-        tblbus.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Matricula", "Color", "Numero", "Capacidad", "Agencia" , "Ruta" , "ID contrato", "Fecha de contrato", "Fecha fin de contrato", "ID horario", "Hora ingreso", "Hora salida"}));
+        tblbus.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Matricula", "Color", "Numero", "Capacidad", "Agencia", "Ruta", "ID contrato", "Fecha de contrato", "Fecha fin de contrato", "ID horario", "Hora ingreso", "Hora salida"}));
         CerrarBD(base);
     }
 
@@ -193,10 +185,20 @@ public void mouseClicked(MouseEvent e) {
         btnbuscar.setText("BUSCAR");
 
         btnregresar.setText("REGRESAR");
+        btnregresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregresarActionPerformed(evt);
+            }
+        });
 
         btnborrar.setText("BORRAR");
 
         btnmodificar.setText("MODIFICAR");
+        btnmodificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmodificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -256,6 +258,24 @@ public void mouseClicked(MouseEvent e) {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
+        
+        if (!matricula.isBlank()) {
+            Modificar_bus modi = new Modificar_bus();
+        modi.recibirCodigo(matricula, num_bus, color_bus, cantidad_pas, agencia, ruta, horario, fecha_obtencion, fecha_fin); // Envía el valor 
+        modi.setVisible(true); // Mostrar la ventana Modificar_bus con los datos
+        this.setVisible(false); // Ocultar esta ventana de consulta
+    } else {
+        JOptionPane.showMessageDialog(this, "Para modificar, primero selecciona un registro");
+    }
+    }//GEN-LAST:event_btnmodificarActionPerformed
+
+    private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
+        Ingreso_bus ing = new Ingreso_bus();
+        ing.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnregresarActionPerformed
 
     /**
      * @param args the command line arguments

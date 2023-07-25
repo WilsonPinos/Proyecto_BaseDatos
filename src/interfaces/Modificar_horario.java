@@ -8,35 +8,50 @@ package interfaces;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import proyecto_basedatos.Destino;
+import proyecto_basedatos.Horario;
 
 /**
  *
  * @author Wilson Pinos
  */
-public class Ingreso_destino extends javax.swing.JFrame {
+public class Modificar_horario extends javax.swing.JFrame {
 
     /**
      * Creates new form Ingreso_bus
      */
-    public Ingreso_destino() {
+    public Modificar_horario() {
         initComponents();
     }
+     public void recibirCodigo(String codigo_ruta, String horaing, String horasalid) {
+        txtid.setText(codigo_ruta);
+        txtid.setEnabled(false);
+        txthoraing.setText(horaing);
+        txthorasalid.setText(horasalid);
 
-    public void CrearDestino(ObjectContainer base) {
-        Destino Cdestino = new Destino(txtid.getText(), txtadescripcion.getText(), txtnombre.getText());
-        Destino Bdestino = new Destino(txtid.getText(), null, null);
-        ObjectSet resultado = base.get(Bdestino);
-        if (resultado.isEmpty()) {
-            base.set(Cdestino);
-            txtid.setText("");
-            txtadescripcion.setText("");
-            txtnombre.setText("");
-            JOptionPane.showMessageDialog(this, "Registro exitoso");
-        } else {
-            JOptionPane.showMessageDialog(this, "Ya existe un destino con este codigo");
-        }
+    }
+
+    public void ModificarHorario(ObjectContainer base) {
+        String formato = "HH:mm:ss";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formato);
+
+        String auxhora_ing= txthoraing.getText();
+        String auxhora_salid= txthorasalid.getText();
+        LocalTime hora_ing = LocalTime.parse(auxhora_ing, formatter);
+        LocalTime hora_salid= LocalTime.parse(auxhora_salid, formatter);
+        
+        Horario Bhorario = new Horario(txtid.getText(), null, null);
+        ObjectSet resultado = base.get(Bhorario);
+        Horario Mhorario = (Horario) resultado.next();
+        Mhorario.setFecha_ingreso(hora_ing);
+        Mhorario.setFecha_salida(hora_salid);
+            base.set(Mhorario);
+            txthoraing.setText("");
+            txthorasalid.setText("");
+        JOptionPane.showMessageDialog(this, "Modificacion exitosa");
     }
 
     /**
@@ -55,21 +70,19 @@ public class Ingreso_destino extends javax.swing.JFrame {
         txtid = new javax.swing.JTextField();
         btnsalir = new javax.swing.JButton();
         btnguardar = new javax.swing.JButton();
-        btnbuscar = new javax.swing.JButton();
-        txtnombre = new javax.swing.JTextField();
         lbldescripcion = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtadescripcion = new javax.swing.JTextArea();
+        txthorasalid = new javax.swing.JTextField();
+        txthoraing = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lbltitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lbltitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbltitulo.setText("INGRESO DE DESTINO");
+        lbltitulo.setText("MODIFICAR HORARIO");
 
         lbliddestino.setText("Id:");
 
-        lblnombre.setText("Nombre:");
+        lblnombre.setText("Hora salida:");
 
         btnsalir.setText("SALIR");
         btnsalir.addActionListener(new java.awt.event.ActionListener() {
@@ -85,18 +98,7 @@ public class Ingreso_destino extends javax.swing.JFrame {
             }
         });
 
-        btnbuscar.setText("BUSCAR");
-        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnbuscarActionPerformed(evt);
-            }
-        });
-
-        lbldescripcion.setText("Descripcion:");
-
-        txtadescripcion.setColumns(20);
-        txtadescripcion.setRows(5);
-        jScrollPane1.setViewportView(txtadescripcion);
+        lbldescripcion.setText("Hora ingreso:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -104,13 +106,6 @@ public class Ingreso_destino extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(btnsalir)
-                        .addGap(51, 51, 51)
-                        .addComponent(btnguardar)
-                        .addGap(46, 46, 46)
-                        .addComponent(btnbuscar))
                     .addComponent(lbltitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(104, 104, 104)
@@ -118,16 +113,18 @@ public class Ingreso_destino extends javax.swing.JFrame {
                             .addComponent(lbliddestino)
                             .addComponent(lbldescripcion)
                             .addComponent(lblnombre))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtid, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtid, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                            .addComponent(txthorasalid)
+                            .addComponent(txthoraing))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnsalir)
+                .addGap(90, 90, 90)
+                .addComponent(btnguardar)
+                .addGap(116, 116, 116))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,17 +136,21 @@ public class Ingreso_destino extends javax.swing.JFrame {
                     .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblnombre))
+                    .addComponent(lblnombre)
+                    .addComponent(txthorasalid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbldescripcion)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnbuscar)
-                    .addComponent(btnguardar)
-                    .addComponent(btnsalir)))
+                    .addComponent(lbldescripcion)
+                    .addComponent(txthoraing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(79, 79, 79)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(btnguardar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnsalir)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -170,30 +171,26 @@ public class Ingreso_destino extends javax.swing.JFrame {
         if (txtid.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "Ingresa un ID");
         } else {
-            if (txtadescripcion.getText().isBlank()) {
-                JOptionPane.showMessageDialog(this, "Ingresa un descripcion");
+            if (txthorasalid.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa una hora de salida");
             } else {
-                if (txtnombre.getText().isBlank()) {
-                    JOptionPane.showMessageDialog(this, "Ingresa un nombre");
+                if (txthoraing.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(this, "Ingresa una hora de ingreso");
                 } else {
                     ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
-                    CrearDestino(base);
+                    ModificarHorario(base);
                     CerrarBD(base);
                 }
             }
         }
     }//GEN-LAST:event_btnguardarActionPerformed
 
-    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
-        dispose();
-        Consulta_destino cons = new Consulta_destino();
-        cons.setVisible(true);
-    }//GEN-LAST:event_btnbuscarActionPerformed
-
     private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
-        Menu_principal ing = new Menu_principal();
-        ing.setVisible(true);
+        
+        Consulta_horario horar = new Consulta_horario();
+        horar.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_btnsalirActionPerformed
 
     /**
@@ -213,14 +210,62 @@ public class Ingreso_destino extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ingreso_destino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ingreso_destino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ingreso_destino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ingreso_destino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -241,7 +286,7 @@ public class Ingreso_destino extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ingreso_destino().setVisible(true);
+                new Modificar_horario().setVisible(true);
             }
         });
     }
@@ -251,17 +296,15 @@ public class Ingreso_destino extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnbuscar;
     private javax.swing.JButton btnguardar;
     private javax.swing.JButton btnsalir;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbldescripcion;
     private javax.swing.JLabel lbliddestino;
     private javax.swing.JLabel lblnombre;
     private javax.swing.JLabel lbltitulo;
-    private javax.swing.JTextArea txtadescripcion;
+    private javax.swing.JTextField txthoraing;
+    private javax.swing.JTextField txthorasalid;
     private javax.swing.JTextField txtid;
-    private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
 }

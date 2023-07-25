@@ -8,34 +8,48 @@ package interfaces;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import proyecto_basedatos.Destino;
+import proyecto_basedatos.Horario;
+import proyecto_basedatos.Turno_asignado;
 
 /**
  *
  * @author Wilson Pinos
  */
-public class Ingreso_destino extends javax.swing.JFrame {
+public class Ingreso_Horario extends javax.swing.JFrame {
 
     /**
      * Creates new form Ingreso_bus
      */
-    public Ingreso_destino() {
+    public Ingreso_Horario() {
         initComponents();
     }
 
-    public void CrearDestino(ObjectContainer base) {
-        Destino Cdestino = new Destino(txtid.getText(), txtadescripcion.getText(), txtnombre.getText());
-        Destino Bdestino = new Destino(txtid.getText(), null, null);
-        ObjectSet resultado = base.get(Bdestino);
+    public void CrearHorario(ObjectContainer base) {
+        String formato = "HH:mm:ss";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formato);
+
+        String auxhora_ing= txthoraingreso.getText();
+        String auxhora_salid= txthorasalida.getText();
+        LocalTime hora_ing = LocalTime.parse(auxhora_ing, formatter);
+        LocalTime hora_salid= LocalTime.parse(auxhora_salid, formatter);
+        
+        Horario Chorario = new Horario(txtid.getText(), hora_ing, hora_salid);
+        Horario Bhorario = new Horario(txtid.getText(), null, null);
+        ObjectSet resultado = base.get(Bhorario);
+        
+        
         if (resultado.isEmpty()) {
-            base.set(Cdestino);
+            base.set(Chorario);
             txtid.setText("");
-            txtadescripcion.setText("");
-            txtnombre.setText("");
+            txthoraingreso.setText("");
+            txthorasalida.setText("");
             JOptionPane.showMessageDialog(this, "Registro exitoso");
         } else {
-            JOptionPane.showMessageDialog(this, "Ya existe un destino con este codigo");
+            JOptionPane.showMessageDialog(this, "Ya existe un horario con este codigo");
         }
     }
 
@@ -56,27 +70,21 @@ public class Ingreso_destino extends javax.swing.JFrame {
         btnsalir = new javax.swing.JButton();
         btnguardar = new javax.swing.JButton();
         btnbuscar = new javax.swing.JButton();
-        txtnombre = new javax.swing.JTextField();
+        txthorasalida = new javax.swing.JTextField();
         lbldescripcion = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtadescripcion = new javax.swing.JTextArea();
+        txthoraingreso = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lbltitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lbltitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbltitulo.setText("INGRESO DE DESTINO");
+        lbltitulo.setText("INGRESO DE HORARIO");
 
         lbliddestino.setText("Id:");
 
-        lblnombre.setText("Nombre:");
+        lblnombre.setText("Hora salida:");
 
         btnsalir.setText("SALIR");
-        btnsalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsalirActionPerformed(evt);
-            }
-        });
 
         btnguardar.setText("GUARDAR");
         btnguardar.addActionListener(new java.awt.event.ActionListener() {
@@ -92,11 +100,7 @@ public class Ingreso_destino extends javax.swing.JFrame {
             }
         });
 
-        lbldescripcion.setText("Descripcion:");
-
-        txtadescripcion.setColumns(20);
-        txtadescripcion.setRows(5);
-        jScrollPane1.setViewportView(txtadescripcion);
+        lbldescripcion.setText("Hora ingreso:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -104,29 +108,28 @@ public class Ingreso_destino extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(btnsalir)
-                        .addGap(51, 51, 51)
-                        .addComponent(btnguardar)
-                        .addGap(46, 46, 46)
-                        .addComponent(btnbuscar))
                     .addComponent(lbltitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbliddestino)
-                            .addComponent(lbldescripcion)
-                            .addComponent(lblnombre))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtid, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(104, 104, 104)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lbliddestino)
+                                    .addComponent(lbldescripcion)
+                                    .addComponent(lblnombre)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(87, 87, 87)
+                                .addComponent(btnsalir)))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnguardar)
+                                .addGap(44, 44, 44)
+                                .addComponent(btnbuscar))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txthorasalida, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                                .addComponent(txtid, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                                .addComponent(txthoraingreso)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -139,17 +142,18 @@ public class Ingreso_destino extends javax.swing.JFrame {
                     .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txthorasalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblnombre))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbldescripcion)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnbuscar)
+                    .addComponent(lbldescripcion)
+                    .addComponent(txthoraingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(58, 58, 58)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnsalir)
                     .addComponent(btnguardar)
-                    .addComponent(btnsalir)))
+                    .addComponent(btnbuscar))
+                .addGap(52, 52, 52))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -170,14 +174,14 @@ public class Ingreso_destino extends javax.swing.JFrame {
         if (txtid.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "Ingresa un ID");
         } else {
-            if (txtadescripcion.getText().isBlank()) {
-                JOptionPane.showMessageDialog(this, "Ingresa un descripcion");
+            if (txthorasalida.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa una hora de salida");
             } else {
-                if (txtnombre.getText().isBlank()) {
-                    JOptionPane.showMessageDialog(this, "Ingresa un nombre");
+                if (txthoraingreso.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(this, "Ingresa una hora de ingreso");
                 } else {
                     ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
-                    CrearDestino(base);
+                    CrearHorario(base);
                     CerrarBD(base);
                 }
             }
@@ -186,15 +190,9 @@ public class Ingreso_destino extends javax.swing.JFrame {
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
         dispose();
-        Consulta_destino cons = new Consulta_destino();
+        Consulta_horario cons = new Consulta_horario();
         cons.setVisible(true);
     }//GEN-LAST:event_btnbuscarActionPerformed
-
-    private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
-        Menu_principal ing = new Menu_principal();
-        ing.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btnsalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,14 +211,30 @@ public class Ingreso_destino extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ingreso_destino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ingreso_Horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ingreso_destino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ingreso_Horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ingreso_destino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ingreso_Horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ingreso_destino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ingreso_Horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -241,7 +255,7 @@ public class Ingreso_destino extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ingreso_destino().setVisible(true);
+                new Ingreso_Horario().setVisible(true);
             }
         });
     }
@@ -255,13 +269,12 @@ public class Ingreso_destino extends javax.swing.JFrame {
     private javax.swing.JButton btnguardar;
     private javax.swing.JButton btnsalir;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbldescripcion;
     private javax.swing.JLabel lbliddestino;
     private javax.swing.JLabel lblnombre;
     private javax.swing.JLabel lbltitulo;
-    private javax.swing.JTextArea txtadescripcion;
+    private javax.swing.JTextField txthoraingreso;
+    private javax.swing.JTextField txthorasalida;
     private javax.swing.JTextField txtid;
-    private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
 }

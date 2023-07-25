@@ -10,66 +10,67 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import proyecto_basedatos.Ruta;
+import proyecto_basedatos.Destino;
+import proyecto_basedatos.Horario;
+import proyecto_basedatos.Turno_asignado;
 
 /**
  *
  * @author Wilson Pinos
  */
-public class Consulta_ruta extends javax.swing.JFrame {
+public class Consulta_horario extends javax.swing.JFrame {
 
     /**
      * Creates new form Consulta_bus
      */
-    private Modificar_ruta mod;
-    private String codigo = "";
-    private String origen = "";
-    private double distancia = 0;
-
-    public Consulta_ruta() {
+    private Modificar_horario modificar;
+    private String id_horario="";
+    private String horaing="";
+    private String horasalid="";
+    
+    public Consulta_horario() {
         initComponents();
-        BuscarRuta();
-        tblrutas.addMouseListener(new MouseAdapter() {
+        
+        BuscarHorario();
+        tblhorario.addMouseListener(new MouseAdapter() {
             DefaultTableModel model = new DefaultTableModel();
 
             public void mouseClicked(MouseEvent e) {
-                int i = tblrutas.getSelectedRow();
-                codigo = tblrutas.getValueAt(i, 0).toString();
-                origen = tblrutas.getValueAt(i, 1).toString();
-                String auxdisntancia = tblrutas.getValueAt(i, 2).toString();
-                double distancia1 = Double.valueOf(auxdisntancia);
-                distancia = distancia1;
-
+                int i = tblhorario.getSelectedRow();
+                id_horario = tblhorario.getValueAt(i, 0).toString();
+                horaing = tblhorario.getValueAt(i, 1).toString();
+                horasalid = tblhorario.getValueAt(i, 2).toString();
             }
+
         });
     }
-
-    public void setModificar_rutas(Modificar_ruta modi) {
-        this.mod = modi;
+    public void setModificar_horario(Modificar_horario modificar) {
+        this.modificar = modificar;
     }
-
-    public final void BuscarRuta() {
+    public void BuscarHorario() {
 
         ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
-        Ruta caje = new Ruta(null, null, 0);
-        ObjectSet resultado = base.get(caje);
+        Horario hor = new Horario(null, null, null);
+        ObjectSet resultado = base.get(hor);
         String matriz[][] = new String[resultado.size()][3];
         int i = 0;
         while (resultado.hasNext()) {
-            Ruta rutas = (Ruta) resultado.next();
-            matriz[i][0] = rutas.getCodigo_ruta();
-            matriz[i][1] = rutas.getOrigen();
-
-            double auxdistancia = rutas.getDistancia();
-            String di = Double.toString(auxdistancia);
-            matriz[i][2] = di;
-
+            Horario tablahorario = (Horario) resultado.next();
+            matriz[i][0] = tablahorario.getId_turno();
+            String formato = "HH:mm:ss";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formato);
+            LocalTime auxhoraing = tablahorario.getFecha_ingreso();
+            LocalTime auxhorasalid = tablahorario.getFecha_salida();
+            matriz[i][1] = auxhoraing.format(formatter);
+            matriz[i][2] = auxhorasalid.format(formatter);
             i++;
 
         }
-        tblrutas.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Codigo", "Origen", "Distancia"}));
+        tblhorario.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID", "Hora de ingreso", "Hora de salida"}));
         CerrarBD(base);
     }
 
@@ -85,7 +86,7 @@ public class Consulta_ruta extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lbltitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblrutas = new javax.swing.JTable();
+        tblhorario = new javax.swing.JTable();
         btnbuscar = new javax.swing.JButton();
         txtbuscar = new javax.swing.JTextField();
         btnregresar = new javax.swing.JButton();
@@ -96,9 +97,9 @@ public class Consulta_ruta extends javax.swing.JFrame {
 
         lbltitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lbltitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbltitulo.setText("CONSULTA DE RUTA");
+        lbltitulo.setText("CONSULTA DE HORARIO");
 
-        tblrutas.setModel(new javax.swing.table.DefaultTableModel(
+        tblhorario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -109,7 +110,7 @@ public class Consulta_ruta extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblrutas);
+        jScrollPane1.setViewportView(tblhorario);
 
         btnbuscar.setText("BUSCAR");
         btnbuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -197,17 +198,39 @@ public class Consulta_ruta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
-        Ingreso_ruta ruta = new Ingreso_ruta();
-        ruta.setVisible(true);
+        dispose();
+        Ingreso_Horario ing = new Ingreso_Horario();
+        ing.setVisible(true);
     }//GEN-LAST:event_btnregresarActionPerformed
 
-    private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
+    private void btnborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnborrarActionPerformed
+        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+        Horario Bhorario = new Horario(id_horario, null, null);
+        ObjectSet resultado = base.get(Bhorario);
+        Turno_asignado Bturno = new Turno_asignado(null, id_horario, null, null);
+        ObjectSet resultado1 = base.get(Bturno);
+        if(resultado1.isEmpty()){
+        while (resultado.hasNext()) {
+            Horario Bhor = (Horario) resultado.next();
+            if (JOptionPane.showConfirmDialog(rootPane, "¿Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                if (id_horario.equals(Bhor.getId_turno())) {
+                    base.delete(Bhor);
+                }
+            }
+        }
+        } else {
+            JOptionPane.showMessageDialog(this, "No pudes eliminar este horario porque tiene un registro");
+        }
+        CerrarBD(base);
+        BuscarHorario();
+    }//GEN-LAST:event_btnborrarActionPerformed
 
-        if (!codigo.isBlank()) {
-            Modificar_ruta modi = new Modificar_ruta();
-            modi.recibirCodigo(codigo, origen, distancia); // Envía el valor 
-            modi.setVisible(true);
-            this.setVisible(false);
+    private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
+        if(!id_horario.isBlank()){
+        Modificar_horario modi = new Modificar_horario();
+        modi.recibirCodigo(id_horario,horaing,horasalid); 
+        modi.setVisible(true);
+        this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Para modificar, primero selecciona un registro");
         }
@@ -215,43 +238,27 @@ public class Consulta_ruta extends javax.swing.JFrame {
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
         ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
-        Ruta caje = new Ruta(null, null, 0);
-        ObjectSet resultado = base.get(caje);
+        Horario hor = new Horario(null, null, null);
+        ObjectSet resultado = base.get(hor);
         String matriz[][] = new String[resultado.size()][3];
         int i = 0;
         while (resultado.hasNext()) {
-            Ruta rutas = (Ruta) resultado.next();
-            if (rutas.getCodigo_ruta().toLowerCase().contains(txtbuscar.getText().toLowerCase())) {
-                matriz[i][0] = rutas.getCodigo_ruta();
-                matriz[i][1] = rutas.getOrigen();
-
-                double auxdistancia = rutas.getDistancia();
-                String distancia = Double.toString(auxdistancia);
-                matriz[i][2] = distancia;
-
+            Horario tablahorario = (Horario) resultado.next();
+            if (tablahorario.getId_turno().toLowerCase().contains(txtbuscar.getText().toLowerCase())) {
+            matriz[i][0] = tablahorario.getId_turno();
+            String formato = "HH:mm:ss";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formato);
+            LocalTime auxhoraing = tablahorario.getFecha_ingreso();
+            LocalTime auxhorasalid = tablahorario.getFecha_salida();
+            matriz[i][1] = auxhoraing.format(formatter);
+            matriz[i][2] = auxhorasalid.format(formatter);
                 i++;
             }
+            
         }
-        tblrutas.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Codigo", "Origen", "distncia"}));
+        tblhorario.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID", "Hora de ingreso", "Hora de salida"}));
         CerrarBD(base);
     }//GEN-LAST:event_btnbuscarActionPerformed
-
-    private void btnborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnborrarActionPerformed
-        ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
-        Ruta Bcajero = new Ruta(codigo, null, 0);
-        ObjectSet resultado = base.get(Bcajero);
-        while (resultado.hasNext()) {
-            Ruta Bcaje = (Ruta) resultado.next();
-            if (JOptionPane.showConfirmDialog(rootPane, "¿Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                if (codigo.equals(Bcaje.getCodigo_ruta())) {
-                    base.delete(Bcaje);
-
-                }
-            }
-        }
-        CerrarBD(base);
-        BuscarRuta();
-    }//GEN-LAST:event_btnborrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,25 +277,30 @@ public class Consulta_ruta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Consulta_ruta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Consulta_horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Consulta_ruta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Consulta_horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Consulta_ruta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Consulta_horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Consulta_ruta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Consulta_horario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Consulta_ruta().setVisible(true);
+                new Consulta_horario().setVisible(true);
             }
         });
     }
-
     public static void CerrarBD(ObjectContainer base) {
         base.close();
     }
@@ -301,7 +313,7 @@ public class Consulta_ruta extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbltitulo;
-    private javax.swing.JTable tblrutas;
+    private javax.swing.JTable tblhorario;
     private javax.swing.JTextField txtbuscar;
     // End of variables declaration//GEN-END:variables
 }

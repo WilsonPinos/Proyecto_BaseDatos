@@ -214,7 +214,7 @@ public class Consulta_destino extends javax.swing.JFrame {
 
     private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
         if(!id_destino.isBlank()){
-        dispose();
+        this.setVisible(false);
         Modificar_destino modi = new Modificar_destino();
         modi.recibirCodigo(id_destino,descripcion,nombre_destino); 
         modi.setVisible(true);

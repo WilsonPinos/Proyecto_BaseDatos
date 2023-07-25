@@ -148,6 +148,11 @@ public class Consulta_cliente extends javax.swing.JFrame {
         });
 
         btnregresar.setText("REGRESAR");
+        btnregresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregresarActionPerformed(evt);
+            }
+        });
 
         btnborrar.setText("BORRAR");
         btnborrar.addActionListener(new java.awt.event.ActionListener() {
@@ -280,6 +285,12 @@ public class Consulta_cliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Para modificar, primero selecciona un registro");
         }
     }//GEN-LAST:event_btnmodificarActionPerformed
+
+    private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
+        Ingreso_cliente ing = new Ingreso_cliente();
+        ing.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnregresarActionPerformed
 
     /**
      * @param args the command line arguments

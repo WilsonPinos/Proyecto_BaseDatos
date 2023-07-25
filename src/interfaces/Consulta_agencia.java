@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyecto_basedatos.Agencia;
+import proyecto_basedatos.Registro_contrato;
 
 /**
  *
@@ -251,12 +252,17 @@ public class Consulta_agencia extends javax.swing.JFrame {
     private void btnregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregresarActionPerformed
         Crud_Agencia crud = new Crud_Agencia();
         crud.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnregresarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        
         ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
         Agencia ag = new Agencia(codigo, null, null, null, null);
         ObjectSet resultado = base.get(ag);
+        Registro_contrato Breg = new Registro_contrato(null, null, codigo, null, null);
+        ObjectSet resultadoregistro = base.get(Breg);
+        if(resultadoregistro.isEmpty()){
         while (resultado.hasNext()) {
             Agencia agencia1 = (Agencia) resultado.next();
             if (JOptionPane.showConfirmDialog(this, "¿Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
@@ -266,6 +272,9 @@ public class Consulta_agencia extends javax.swing.JFrame {
                 }
             }
         }
+        } else {
+            JOptionPane.showMessageDialog(this, "No puedes eliminar esta agencia ya que hay un registro con estos datos");
+        }
         CerrarBD(base);
         BuscarAgencia();
 
@@ -273,7 +282,6 @@ public class Consulta_agencia extends javax.swing.JFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if (!codigo.isBlank()) {
-
             Modificar_Agencia modi = new Modificar_Agencia();
             modi.recibirCodigo(codigo); // Envía el valor de "codigo" a Modificar_Escuelas
             modi.setVisible(true);

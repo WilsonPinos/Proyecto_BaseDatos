@@ -10,6 +10,8 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import javax.swing.JOptionPane;
 import proyecto_basedatos.Agencia;
+import proyecto_basedatos.Bus;
+import proyecto_basedatos.Registro_contrato;
 
 /**
  *
@@ -87,6 +89,11 @@ public class Crud_Agencia extends javax.swing.JFrame {
 
         btnSalir2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnSalir2.setText("SALIR");
+        btnSalir2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalir2ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel7.setText("UBICACION :");
@@ -207,7 +214,14 @@ public class Crud_Agencia extends javax.swing.JFrame {
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         Consulta_agencia agencia = new Consulta_agencia();
         agencia.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir2ActionPerformed
+        Menu_principal ing = new Menu_principal();
+        ing.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnSalir2ActionPerformed
 
     private void txtcodigoKeyTyped(java.awt.event.KeyEvent evt) {
         char letra = evt.getKeyChar();

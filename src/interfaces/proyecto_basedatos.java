@@ -210,13 +210,10 @@ public class proyecto_basedatos extends javax.swing.JFrame {
 
     private void btnIngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresoMouseClicked
 
-        /*  if (txtUsuario.getText().equals("Anthony") && pUsuario.getText().equals("12345678")) {
-            Menu menus = new Menu();
-            menus.setVisible(true);
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Credenciales no validas:\nusuario", "LOGIN", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        }
-         */
+        Menu_principal menu = new Menu_principal();
+        menu.setVisible(true);
+        this.setVisible(false);
+        
         javax.swing.JOptionPane.showMessageDialog(this, "Intento de login:\nusuario" + txtUsuario.getText() + "Contraseña" + String.valueOf(pUsuario.getPassword()), "LOGIN", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnIngresoMouseClicked
 

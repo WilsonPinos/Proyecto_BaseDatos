@@ -40,42 +40,51 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="lbltitulo" alignment="0" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
+                          <Component id="btnsalir" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnguardar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
                           <Component id="lblopcional" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lblfechafin" min="-2" max="-2" attributes="0"/>
                               <Component id="lblfechaobtencion" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblruta" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="dcfechaobtencion" pref="141" max="32767" attributes="0"/>
+                              <Component id="dcfechafin" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="197" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="lblagencia" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="lblcapacidad" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="lblcolor" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="lblnumerobus" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="lblmatricula" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblruta" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="spnnumerobus" min="-2" max="-2" attributes="0"/>
-                              <Component id="cbcapacidad" min="-2" max="-2" attributes="0"/>
                               <Component id="txtmatricula" alignment="0" max="32767" attributes="0"/>
-                              <Component id="dcfechaobtencion" alignment="0" max="32767" attributes="0"/>
-                              <Component id="dcfechafin" alignment="0" max="32767" attributes="0"/>
                               <Component id="cbcolor" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                               <Component id="cbagencia" alignment="0" max="32767" attributes="0"/>
-                              <Component id="cbruta" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
+                              <Component id="cbruta" alignment="0" pref="136" max="32767" attributes="0"/>
+                              <Component id="txtnumbus" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtcapacidad" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
+                              <Component id="cbhorario" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
-                          <Component id="btnsalir" min="-2" pref="69" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnguardar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
-                  <EmptySpace pref="171" max="32767" attributes="0"/>
+                  <EmptySpace pref="165" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -91,7 +100,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblnumerobus" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="spnnumerobus" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtnumbus" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -101,19 +110,24 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblcapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cbcapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtcapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblagencia" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cbagencia" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblruta" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cbruta" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbhorario" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblfechaobtencion" min="-2" max="-2" attributes="0"/>
                       <Component id="dcfechaobtencion" min="-2" max="-2" attributes="0"/>
@@ -126,7 +140,7 @@
                       </Group>
                       <Component id="dcfechafin" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="39" max="32767" attributes="0"/>
+                  <EmptySpace pref="45" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnsalir" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnguardar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -193,8 +207,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtmatricula">
         </Component>
-        <Component class="javax.swing.JSpinner" name="spnnumerobus">
-        </Component>
         <Component class="javax.swing.JComboBox" name="cbcolor">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -215,21 +227,11 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JSpinner" name="cbcapacidad">
-          <Properties>
-            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="1" maximum="100" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
-            </Property>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JComboBox" name="cbagencia">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+              <StringArray count="1">
+                <StringItem index="0" value=""/>
               </StringArray>
             </Property>
           </Properties>
@@ -240,11 +242,8 @@
         <Component class="javax.swing.JComboBox" name="cbruta">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+              <StringArray count="1">
+                <StringItem index="0" value=""/>
               </StringArray>
             </Property>
           </Properties>
@@ -260,11 +259,38 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="SALIR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnsalirActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnguardar">
           <Properties>
             <Property name="text" type="java.lang.String" value="GUARDAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnguardarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtnumbus">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtcapacidad">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Horario:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cbhorario">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="1">
+                <StringItem index="0" value=""/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

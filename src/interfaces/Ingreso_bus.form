@@ -58,8 +58,7 @@
                               <Component id="lblnumerobus" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="lblmatricula" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="lblruta" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -67,10 +66,9 @@
                               <Component id="cbcolor" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                               <Component id="cbagencia" alignment="0" max="32767" attributes="0"/>
                               <Component id="cbruta" alignment="0" pref="136" max="32767" attributes="0"/>
-                              <Component id="txthorasalida" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txthoraingreso" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtnumbus" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtcapacidad" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
+                              <Component id="cbhorario" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -128,15 +126,10 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txthorasalida" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbhorario" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txthoraingreso" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblfechaobtencion" min="-2" max="-2" attributes="0"/>
                       <Component id="dcfechaobtencion" min="-2" max="-2" attributes="0"/>
@@ -149,7 +142,7 @@
                       </Group>
                       <Component id="dcfechafin" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="33" max="32767" attributes="0"/>
+                  <EmptySpace pref="30" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnsalir" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnguardar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -286,23 +279,26 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnbuscarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Hora ingreso:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Hora salida:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txthorasalida">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txthoraingreso">
-        </Component>
         <Component class="javax.swing.JTextField" name="txtnumbus">
         </Component>
         <Component class="javax.swing.JTextField" name="txtcapacidad">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Horaio:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cbhorario">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="1">
+                <StringItem index="0" value=""/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

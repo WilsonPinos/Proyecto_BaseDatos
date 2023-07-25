@@ -73,6 +73,11 @@ public class Ingreso_ruta extends javax.swing.JFrame {
         lblorigen.setText("Origen:");
 
         btnsalir.setText("SALIR");
+        btnsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsalirActionPerformed(evt);
+            }
+        });
 
         btnguardar.setText("GUARDAR");
         btnguardar.addActionListener(new java.awt.event.ActionListener() {
@@ -192,7 +197,14 @@ public class Ingreso_ruta extends javax.swing.JFrame {
 
         Consulta_ruta ruta = new Consulta_ruta();
         ruta.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnbuscarActionPerformed
+
+    private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
+        Menu_principal ing = new Menu_principal();
+        ing.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnsalirActionPerformed
 
     /**
      * @param args the command line arguments
