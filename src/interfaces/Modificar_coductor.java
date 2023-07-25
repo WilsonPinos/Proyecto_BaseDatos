@@ -5,6 +5,14 @@
  */
 package interfaces;
 
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import static interfaces.Crud_coductor.CerrarBD;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import proyecto_basedatos.Conductor;
+
 /**
  *
  * @author mauri
@@ -16,7 +24,49 @@ public class Modificar_coductor extends javax.swing.JFrame {
      */
     public Modificar_coductor() {
         initComponents();
+        dcfechafin.setMaxSelectableDate(new Date());
+
     }
+    
+    //String id_conductor, String cedula, String Anio_experiencia, String tipo_Licencia, String id_licencia, String nombre, String apellido, String telefono, int edad, Date fecha_nacimiento) {
+
+    public void recibirCodigo(String id_conductor, String Cedula,String anio, String tipo, String idlicencia, String nombre, String ape, String telefono,int edad, Date nacimiento) {
+        txtcodigo.setText(id_conductor);
+        txtcedula.setText(Cedula);
+        txtanio.setText(anio);
+        cbxlicencia.setSelectedItem(tipo);
+        txtLicencia.setText(idlicencia);
+        txtNombre.setText(nombre);
+        txtApellido.setText(ape);
+        txttelefono.setText(telefono);
+        String auxedad = String.valueOf(edad);
+        txtedad.setText(auxedad);
+        dcfechafin.setDate(nacimiento);
+
+    }
+    
+     public void ModificarConductor(ObjectContainer base) {
+
+        Conductor conduc = new Conductor(txtcodigo.getText(), null, null, null, null, null,null,null, 0, null);
+        ObjectSet resultado = base.get(conduc);
+        Conductor con = (Conductor) resultado.next();
+        con.setNombre(txtNombre.getText());
+        con.setApellido(txtApellido.getText());
+        con.setCedula(txtcedula.getText());
+        con.setAnio_experiencia(txtanio.getText());
+        con.setId_licencia(txtLicencia.getText());
+        con.setTelefono(txttelefono.getText());
+        con.setTipo_Licencia(cbxlicencia.getSelectedItem().toString());
+        String auxedad = txtedad.getText();
+        int edad = Integer.valueOf(auxedad);
+        con.setEdad(edad);
+        con.setFecha_nacimiento(dcfechafin.getDate());
+        base.set(con);
+
+        JOptionPane.showMessageDialog(this, "Modificacion exitosa");
+
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,22 +93,25 @@ public class Modificar_coductor extends javax.swing.JFrame {
         txtApellido = new javax.swing.JTextField();
         txtLicencia = new javax.swing.JTextField();
         txtcodigo = new javax.swing.JTextField();
-        spnredad = new javax.swing.JSpinner();
         cbxlicencia = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btnguardar = new javax.swing.JButton();
         btnSalir2 = new javax.swing.JButton();
+        dcfechafin = new com.toedter.calendar.JDateChooser();
+        txtanio = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txtedad = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "----------------------------REGISTRO DE CONDUCTOR-----------------------------", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 18))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "----------------------------MPODIFICAR CONDUCTOR-----------------------------", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 18))); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel2.setText("APELLIDO :");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
+        jLabel2.setText("EXPERIENCIA:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setText("TELEFONO :");
@@ -97,7 +150,6 @@ public class Modificar_coductor extends javax.swing.JFrame {
         jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 170, -1));
         jPanel1.add(txtLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 170, -1));
         jPanel1.add(txtcodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 170, -1));
-        jPanel1.add(spnredad, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 110, -1));
 
         cbxlicencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(cbxlicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 150, -1));
@@ -121,27 +173,68 @@ public class Modificar_coductor extends javax.swing.JFrame {
 
         btnSalir2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnSalir2.setText("SALIR");
+        btnSalir2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalir2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnSalir2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 140, -1));
+        jPanel1.add(dcfechafin, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, -1, -1));
+        jPanel1.add(txtanio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 150, -1));
+
+        jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel12.setText("APELLIDO :");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
+        jPanel1.add(txtedad, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 170, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-
+ Date fechaSeleccionada = dcfechafin.getDate();
+        if (txtcodigo.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingresa el codigo del conductor");
+        } else {
+            if (txtcedula.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa la cedula del conductor");
+            } else if (txtNombre.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el nombre del conductor");
+            } else if (txtApellido.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el apellido del conductor");
+            } else if (txtedad.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa la edad  del conductor");
+            } else if (txtedad.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el correo del conductor");
+            } else if (cbxlicencia.getSelectedItem().toString().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el celular del conductor");
+            } else if (fechaSeleccionada == null) {
+                JOptionPane.showMessageDialog(this, "Ingresa la fecha de nacimiento del conductor");
+            } else if (txtanio.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa los añosde experiencia de conductor");
+            } else {
+                ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                ModificarConductor(base);
+                CerrarBD(base);
+            }
+        }
     }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir2ActionPerformed
+       System.exit(WIDTH);
+    }//GEN-LAST:event_btnSalir2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,9 +276,11 @@ public class Modificar_coductor extends javax.swing.JFrame {
     private javax.swing.JButton btnSalir2;
     private javax.swing.JButton btnguardar;
     private javax.swing.JComboBox<String> cbxlicencia;
+    private com.toedter.calendar.JDateChooser dcfechafin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -195,12 +290,13 @@ public class Modificar_coductor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner spnredad;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtLicencia;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtanio;
     private javax.swing.JTextField txtcedula;
     private javax.swing.JTextField txtcodigo;
+    private javax.swing.JTextField txtedad;
     private javax.swing.JTextField txttelefono;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,13 @@
  */
 package interfaces;
 
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import proyecto_basedatos.Conductor;
+
 /**
  *
  * @author mauri
@@ -16,6 +23,7 @@ public class Crud_coductor extends javax.swing.JFrame {
      */
     public Crud_coductor() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -37,13 +45,12 @@ public class Crud_coductor extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txttelefono = new javax.swing.JTextField();
+        txtedad = new javax.swing.JTextField();
         txtcedula = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         txtLicencia = new javax.swing.JTextField();
         txtcodigo = new javax.swing.JTextField();
-        spnredad = new javax.swing.JSpinner();
         cbxlicencia = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -51,6 +58,9 @@ public class Crud_coductor extends javax.swing.JFrame {
         btnconsulta = new javax.swing.JButton();
         btnSalir2 = new javax.swing.JButton();
         dcfechafin = new com.toedter.calendar.JDateChooser();
+        txttelefono = new javax.swing.JTextField();
+        txtanio = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,8 +69,8 @@ public class Crud_coductor extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel2.setText("APELLIDO :");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
+        jLabel2.setText("EXPERIENCIA:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setText("TELEFONO :");
@@ -93,24 +103,23 @@ public class Crud_coductor extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel11.setText("EDAD:");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, -1, -1));
-        jPanel1.add(txttelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 220, 170, -1));
+        jPanel1.add(txtedad, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 170, -1));
         jPanel1.add(txtcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 170, -1));
         jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 170, -1));
         jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 170, -1));
         jPanel1.add(txtLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 170, -1));
         jPanel1.add(txtcodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 170, -1));
-        jPanel1.add(spnredad, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 110, -1));
 
         cbxlicencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(cbxlicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 150, -1));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setText("--------------------------------------------------------------------------------------");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel6.setText("--------------------------------------------------------------------------------------");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, -1, -1));
 
         btnguardar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnguardar.setText("GUARDAR");
@@ -119,16 +128,32 @@ public class Crud_coductor extends javax.swing.JFrame {
                 btnguardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, -1, -1));
+        jPanel1.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
 
         btnconsulta.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnconsulta.setText("CONSULTAR");
-        jPanel1.add(btnconsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, -1, -1));
+        btnconsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnconsultaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnconsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 380, -1, -1));
 
         btnSalir2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnSalir2.setText("SALIR");
-        jPanel1.add(btnSalir2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, 140, -1));
+        btnSalir2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalir2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSalir2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 390, 140, -1));
         jPanel1.add(dcfechafin, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, -1, -1));
+        jPanel1.add(txttelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 220, 170, -1));
+        jPanel1.add(txtanio, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 150, -1));
+
+        jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel12.setText("APELLIDO :");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,8 +174,54 @@ public class Crud_coductor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-
+        Date fechaSeleccionada = dcfechafin.getDate();
+        if (txtcodigo.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingresa el codigo del conductor");
+        } else {
+            if (txtcedula.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa la cedula del conductor");
+            } else if (txtNombre.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el nombre del conductor");
+            } else if (txtApellido.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el apellido del conductor");
+            } else if (txtedad.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa la edad  del conductor");
+            } else if (txtedad.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el correo del conductor");
+            } else if (cbxlicencia.getSelectedItem().toString().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingresa el celular del conductor");
+            } else if (fechaSeleccionada == null) {
+                JOptionPane.showMessageDialog(this, "Ingresa la fecha de nacimiento del conductor");
+            } else if (txtanio.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Ingresa los añosde experiencia de conductor");
+            } else {
+                ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
+                CrearConductor(base);
+                CerrarBD(base);
+            }
+        }
     }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnconsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnconsultaActionPerformed
+        Consulta_conductors cond = new Consulta_conductors();
+        cond.setVisible(true);
+        
+    }//GEN-LAST:event_btnconsultaActionPerformed
+
+    private void btnSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir2ActionPerformed
+       
+    }//GEN-LAST:event_btnSalir2ActionPerformed
+
+    private void txtcodigoKeyTyped(java.awt.event.KeyEvent evt) {
+        char letra = evt.getKeyChar();
+        if (!Character.isDigit(letra)) {
+            evt.consume();
+        }
+
+        if (txtcodigo.getText().length() > 14) {
+            evt.consume();
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -187,6 +258,37 @@ public class Crud_coductor extends javax.swing.JFrame {
         });
     }
 
+    public void CrearConductor(ObjectContainer base) {
+//String Id_cliente, String cedula_cli, String nombre_cli, String apellido_cli, String telefono_cli, String correo_cli, int edad_cli, Date fecha_nacimiento) {
+        int edad;
+        String auxedad = txtedad.getText();
+        edad = Integer.valueOf(auxedad);
+//String id_conductor, String cedula, String Anio_experiencia, String tipo_Licencia, String id_licencia, String nombre, String apellido, String telefono, int edad, Date fecha_nacimiento) {
+
+        Conductor condu = new Conductor(txtcodigo.getText(), txtcedula.getText(),txtanio.getText(),cbxlicencia.getSelectedItem().toString(),txtLicencia.getText(), txtNombre.getText(), txtApellido.getText(), txttelefono.getText(),edad,dcfechafin.getDate());
+        Conductor co = new Conductor(txtcodigo.getText(), null, null, null, null, null,null,null, 0, null);
+        ObjectSet resultado = base.get(co);
+        if (resultado.isEmpty()) {
+            base.set(condu);
+            txtcodigo.setText("");
+            txtcedula.setText("");
+            txtNombre.setText("");
+            txtApellido.setText("");
+            txttelefono.setText("");
+            txtanio.setText(" ");
+            cbxlicencia.getSelectedItem();
+            txtedad.setText(" ");
+            dcfechafin.setMaxSelectableDate(new Date());
+            JOptionPane.showMessageDialog(this, "Registro exitoso");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ya existe un conductor con este codigo");
+        }
+    }
+
+    public static void CerrarBD(ObjectContainer base) {
+        base.close();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir2;
     private javax.swing.JButton btnconsulta;
@@ -196,6 +298,7 @@ public class Crud_coductor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -205,12 +308,13 @@ public class Crud_coductor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner spnredad;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtLicencia;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtanio;
     private javax.swing.JTextField txtcedula;
     private javax.swing.JTextField txtcodigo;
+    private javax.swing.JTextField txtedad;
     private javax.swing.JTextField txttelefono;
     // End of variables declaration//GEN-END:variables
 }

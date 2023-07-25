@@ -29,34 +29,34 @@ public class Ingreso_bus extends javax.swing.JFrame {
      */
     public Ingreso_bus() {
         initComponents();
-        
+
         ObjectContainer base = Db4o.openFile(proyecto_basedatos.BDdireccion);
         Agencia Bagencia = new Agencia(null, null, null, null, null);
-        ObjectSet result= base.get(Bagencia);
-        
-        while (result.hasNext()){
-            Agencia agen= (Agencia) result.next();
+        ObjectSet result = base.get(Bagencia);
+
+        while (result.hasNext()) {
+            Agencia agen = (Agencia) result.next();
             cbagencia.addItem(agen.getNombre_agencia());
         }
         Ruta Bruta = new Ruta(null, null, 0);
-        ObjectSet result1= base.get(Bruta);
-        
-        while (result1.hasNext()){
-            Ruta rut= (Ruta) result1.next();
+        ObjectSet result1 = base.get(Bruta);
+
+        while (result1.hasNext()) {
+            Ruta rut = (Ruta) result1.next();
             cbruta.addItem(rut.getOrigen());
         }
-        
-         Horario Bhorario = new Horario(null, null, null);
-        ObjectSet result2= base.get(Bhorario);
-        
-        while (result2.hasNext()){
-            Horario hor= (Horario) result2.next();
+
+        Horario Bhorario = new Horario(null, null, null);
+        ObjectSet result2 = base.get(Bhorario);
+
+        while (result2.hasNext()) {
+            Horario hor = (Horario) result2.next();
             cbhorario.addItem(hor.getId_turno());
         }
-        
+
         CerrarBD(base);
     }
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -294,7 +294,6 @@ public class Ingreso_bus extends javax.swing.JFrame {
     }//GEN-LAST:event_btnguardarActionPerformed
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
-        
         Consulta_bus cons = new Consulta_bus();
         cons.setVisible(true);
         setVisible(false);
@@ -345,26 +344,24 @@ public class Ingreso_bus extends javax.swing.JFrame {
         ObjectSet resultado = base.get(Bbus);
         Registro_contrato Bregnum = new Registro_contrato(null, null, null, null, null);
         ObjectSet resultadonum = base.get(Bregnum);
-        int auxidhorario = resultadonum.size()+1;
-        int auxidcontrato = resultadonum.size()+1;
+        int auxidhorario = resultadonum.size() + 1;
+        int auxidcontrato = resultadonum.size() + 1;
         String idhorario = String.valueOf(auxidhorario);
         String idcontrato = String.valueOf(auxidcontrato);
-        
+
         Agencia Bagencia = new Agencia(null, cbagencia.getSelectedItem().toString(), null, null, null);
-        
+
         ObjectSet resultado2 = base.get(Bagencia);
         Agencia agencia = (Agencia) resultado2.next();
         String idagencia = agencia.getId_agencia();
         Registro_contrato Creg = new Registro_contrato(idcontrato, txtmatricula.getText(), idagencia, dcfechaobtencion.getDate(), dcfechafin.getDate());
         Registro_contrato Breg = new Registro_contrato(idcontrato, null, null, null, null);
         ObjectSet resultado1 = base.get(Breg);
-        
+
         Date fecha_aginacion = new Date();
         Turno_asignado Cturno = new Turno_asignado(idcontrato, cbhorario.getSelectedItem().toString(), txtmatricula.getText(), fecha_aginacion);
         Turno_asignado Bturno = new Turno_asignado(idcontrato, null, null, null);
         ObjectSet resultado3 = base.get(Bturno);
-        
-        
 
         if (resultado.isEmpty()) {
             if (resultado1.isEmpty() && resultado3.isEmpty()) {
@@ -389,7 +386,7 @@ public class Ingreso_bus extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ya existe un cajero con este ID");
         }
     }
-    
+
     public static void CerrarBD(ObjectContainer base) {
         base.close();
     }
