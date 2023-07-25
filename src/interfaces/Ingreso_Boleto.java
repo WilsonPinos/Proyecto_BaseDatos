@@ -168,6 +168,11 @@ public class Ingreso_Boleto extends javax.swing.JFrame {
         cbdestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
 
         btnsalir.setText("SALIR");
+        btnsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsalirActionPerformed(evt);
+            }
+        });
 
         btngenerar.setText("GENERAR");
         btngenerar.addActionListener(new java.awt.event.ActionListener() {
@@ -309,6 +314,12 @@ public class Ingreso_Boleto extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btngenerarActionPerformed
+
+    private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
+        Menu_principal menu = new Menu_principal();
+        menu.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnsalirActionPerformed
 
     /**
      * @param args the command line arguments
