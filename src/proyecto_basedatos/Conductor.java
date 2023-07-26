@@ -15,6 +15,7 @@ public class Conductor {
     private String id_conductor,cedula,Anio_experiencia,tipo_Licencia,id_licencia,nombre,apellido,telefono;
     private int edad;
     private Date fecha_nacimiento;
+   
 
     public Conductor() { 
     }
